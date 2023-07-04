@@ -1,5 +1,6 @@
 package ee.sergei.lemmikloomad.service;
 
+import ee.sergei.lemmikloomad.dto.PetDTO;
 import ee.sergei.lemmikloomad.entities.Owner;
 import ee.sergei.lemmikloomad.entities.Pet;
 import ee.sergei.lemmikloomad.repositories.OwnerRepository;
@@ -51,24 +52,15 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public int getNumberOfPetsForOwner(Long id) {
-
-        Owner owner = ownerRepository.findById(id).get(); //orElse(null);
-//        if (owner != null) {
+        Owner owner = ownerRepository.findById(id).get();
             return owner.getPets().size();
-//        }
-//        return 0;
     }
 
     @Override
-    public Pet getHeaviestPetForOwner(Long id) {
+    public PetDTO getHeaviestPetForOwner(Long id) {
         Owner owner = ownerRepository.findById(id).get();
-//        Owner owner = ownerRepository.findById(id).orElse(null);
         List<Pet> pets = petRepository.findAllByOwner(owner);
-
-
-
-//        System.out.println("owner response: " + owner);
-//        return null;
+        PetDTO heaviestPetDTO = new PetDTO();
 
         Pet heaviestPet = pets.get(0);
         for (Pet pet : pets) {
@@ -76,19 +68,11 @@ public class OwnerServiceImpl implements OwnerService {
                 heaviestPet = pet;
             }
         }
+
+        heaviestPetDTO.setPetName(heaviestPet.getPetName());
+        heaviestPetDTO.setPetWeight(heaviestPet.getPetWeight());
+
         log.debug("heaviestPet response: " + heaviestPet);
-        return heaviestPet;
+        return heaviestPetDTO;
     }
-
-
-
-    /*
-    *
-        Pet pet = new Pet(name, weight);
-        petRepository.save(pet);
-
-//        List<Pet> allPets = petRepository.findAll();
-        return petRepository.findAll();
-    * */
-
 }

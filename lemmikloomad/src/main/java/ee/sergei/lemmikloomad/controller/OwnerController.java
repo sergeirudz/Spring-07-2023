@@ -1,5 +1,6 @@
 package ee.sergei.lemmikloomad.controller;
 
+import ee.sergei.lemmikloomad.dto.PetDTO;
 import ee.sergei.lemmikloomad.entities.Owner;
 import ee.sergei.lemmikloomad.entities.Pet;
 import ee.sergei.lemmikloomad.service.OwnerService;
@@ -44,7 +45,7 @@ public class OwnerController {
 
     // get the heaviest pet for one owner
     @GetMapping("owner/{id}/heaviest-pet") // localhost:8080/owner/1/heaviest-pet
-    public Pet getHeaviestPetForOwner(
+    public PetDTO getHeaviestPetForOwner(
             @PathVariable("id") Long id
     ) {
         return ownerService.getHeaviestPetForOwner(id);

@@ -3,10 +3,13 @@ package ee.sergei.lemmikloomad.dto;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
+
 
 @Data
-public class OwnerDTO {
+public class OwnerDTO implements Serializable {
 
-    private String name;
+    private Long id;
+    private String ownerName;
     private PetDTO pet;
 }

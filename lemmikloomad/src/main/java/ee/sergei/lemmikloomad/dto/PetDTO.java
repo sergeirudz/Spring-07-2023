@@ -5,9 +5,9 @@ import lombok.Data;
 
 import java.io.Serializable;
 
-@Builder
+//@Builder
 @Data
 public class PetDTO implements Serializable {
-    private String name;
-    private double weight;
+    private String petName;
+    private double petWeight;
 }

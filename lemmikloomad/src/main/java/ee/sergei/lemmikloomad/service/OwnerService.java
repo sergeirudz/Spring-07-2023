@@ -1,4 +1,5 @@
 package ee.sergei.lemmikloomad.service;
+import ee.sergei.lemmikloomad.dto.PetDTO;
 import ee.sergei.lemmikloomad.entities.Owner;
 import ee.sergei.lemmikloomad.entities.Pet;
 
@@ -12,5 +13,5 @@ public interface OwnerService {
 
     int getNumberOfPetsForOwner(Long id);
 
-    Pet getHeaviestPetForOwner(Long id);
+    PetDTO getHeaviestPetForOwner(Long id);
 }
