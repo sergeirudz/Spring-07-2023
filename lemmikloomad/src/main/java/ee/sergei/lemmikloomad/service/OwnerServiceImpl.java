@@ -46,6 +46,16 @@ public class OwnerServiceImpl implements OwnerService {
         }
     }
 
+    @Override
+    public int getNumberOfPetsForOwner(Long id) {
+
+        Owner owner = ownerRepository.findById(id).get(); //orElse(null);
+//        if (owner != null) {
+            return owner.getPets().size();
+//        }
+//        return 0;
+    }
+
 
 
     /*

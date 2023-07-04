@@ -20,6 +20,7 @@ public class Owner {
     private String ownerName;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+//    @JoinColumn(name = "pet_name", nullable = true)
     private Set<Pet> pets;
 
 }

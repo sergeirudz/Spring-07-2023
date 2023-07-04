@@ -5,6 +5,7 @@ import ee.sergei.lemmikloomad.service.OwnerService;
 import lombok.RequiredArgsConstructor;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class OwnerController {
         return ownerService.addOwner(name);
     }
 
-    @GetMapping("owner/all")
+    @GetMapping("owner/all") // ERROR: localhost:8080/owner/all
     public List<Owner> getAllOwners() {
         return ownerService.getAllOwners();
     }
@@ -30,5 +31,13 @@ public class OwnerController {
             @RequestParam("petName") String petName
     ) {
          ownerService.addPetToOwner(ownerName, petName);
+    }
+
+
+    @GetMapping("owner/{id}/pets") // localhost:8080/owner/1/pets
+    public int getNumberOfPetsForOwner(
+            @PathVariable("id") Long id
+    ) {
+        return ownerService.getNumberOfPetsForOwner(id);
     }
 }

@@ -8,4 +8,6 @@ public interface OwnerService {
     List<Owner> getAllOwners();
 
     void addPetToOwner(String ownerName, String petName);
+
+    int getNumberOfPetsForOwner(Long id);
 }
