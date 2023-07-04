@@ -1,4 +1,5 @@
 package ee.sergei.lemmikloomad.entities;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,8 +20,8 @@ public class Owner {
     @Column(name = "owner_name")
     private String ownerName;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
-//    @JoinColumn(name = "pet_name", nullable = true)
     private Set<Pet> pets;
 
 }

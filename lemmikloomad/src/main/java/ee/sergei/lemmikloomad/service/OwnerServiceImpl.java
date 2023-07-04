@@ -4,12 +4,15 @@ import ee.sergei.lemmikloomad.entities.Owner;
 import ee.sergei.lemmikloomad.entities.Pet;
 import ee.sergei.lemmikloomad.repositories.OwnerRepository;
 import ee.sergei.lemmikloomad.repositories.PetRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 
+@Slf4j
 @Service
 public class OwnerServiceImpl implements OwnerService {
 
@@ -54,6 +57,27 @@ public class OwnerServiceImpl implements OwnerService {
             return owner.getPets().size();
 //        }
 //        return 0;
+    }
+
+    @Override
+    public Pet getHeaviestPetForOwner(Long id) {
+        Owner owner = ownerRepository.findById(id).get();
+//        Owner owner = ownerRepository.findById(id).orElse(null);
+        List<Pet> pets = petRepository.findAllByOwner(owner);
+
+
+
+//        System.out.println("owner response: " + owner);
+//        return null;
+
+        Pet heaviestPet = pets.get(0);
+        for (Pet pet : pets) {
+            if (pet.getPetWeight() > heaviestPet.getPetWeight()) {
+                heaviestPet = pet;
+            }
+        }
+        log.debug("heaviestPet response: " + heaviestPet);
+        return heaviestPet;
     }
 
 
