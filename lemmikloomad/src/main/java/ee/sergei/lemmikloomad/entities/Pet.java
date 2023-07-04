@@ -1,16 +1,20 @@
 package ee.sergei.lemmikloomad.entities;
-
 import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
+@Table(name="pet")
+@Data
 public class Pet {
 
     @Id
-    private String name;
-    private double weight;
+    @Column(name = "pet_name")
+    private String petName;
 
+    @Column(name = "pet_weight")
+    private double petWeight;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_name", nullable = true)
+    private Owner owner;
 }

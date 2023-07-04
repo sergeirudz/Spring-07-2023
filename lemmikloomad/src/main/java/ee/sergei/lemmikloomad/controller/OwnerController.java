@@ -14,9 +14,21 @@ public class OwnerController {
     private final OwnerService ownerService;
 
     @GetMapping("owner/add") // localhost:8080/owner/add?name=Omanik
-    public void addOwner(
+    public List<Owner> addOwner(
             @RequestParam("name") String name) {
-        ownerService.addOwner(name);
+        return ownerService.addOwner(name);
     }
 
+    @GetMapping("owner/all")
+    public List<Owner> getAllOwners() {
+        return ownerService.getAllOwners();
+    }
+
+    @GetMapping("owner/add-pet")
+    public void addPetToOwner(
+            @RequestParam("ownerName") String ownerName,
+            @RequestParam("petName") String petName
+    ) {
+         ownerService.addPetToOwner(ownerName, petName);
+    }
 }

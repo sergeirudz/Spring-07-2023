@@ -1,23 +1,25 @@
 package ee.sergei.lemmikloomad.entities;
-
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.HashSet;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Table(name="owner")
+@Getter
+@Setter
 public class Owner {
 
+
     @Id
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @Column(name = "owner_name")
+    private String ownerName;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    private Set<Pet> pets;
 
 }

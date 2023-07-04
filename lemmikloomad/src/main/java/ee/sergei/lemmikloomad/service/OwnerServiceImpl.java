@@ -21,16 +21,31 @@ public class OwnerServiceImpl implements OwnerService {
 
 
     @Override
-    public void addOwner(String name) {
-        Owner owner = new Owner(name);
-   ownerRepository.save(owner);
+    public List<Owner> addOwner(String name) {
+        Owner owner = new Owner();
+        owner.setOwnerName(name);
         ownerRepository.save(owner);
+        return ownerRepository.findAll();
     }
 
     @Override
     public List<Owner> getAllOwners() {
-        return null;
+        return ownerRepository.findAll();
     }
+
+    @Override
+    public void addPetToOwner(String ownerName, String petName) {
+        Owner owner = ownerRepository.findByOwnerName(ownerName);
+        Pet pet = petRepository.findByPetName(petName);
+
+        if (owner != null && pet != null) {
+            pet.setOwner(owner);
+            petRepository.save(pet);
+//            owner.getPets().add(pet);
+//            ownerRepository.save(owner);
+        }
+    }
+
 
 
     /*

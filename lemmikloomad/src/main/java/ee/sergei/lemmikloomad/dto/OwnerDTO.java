@@ -1,9 +1,9 @@
-package ee.sergei.lemmikloomad.model;
+package ee.sergei.lemmikloomad.dto;
 
 import lombok.Builder;
 import lombok.Data;
 
-@Builder
+
 @Data
 public class OwnerDTO {
 

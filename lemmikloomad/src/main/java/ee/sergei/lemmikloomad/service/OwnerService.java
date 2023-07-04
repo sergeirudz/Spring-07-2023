@@ -4,6 +4,8 @@ import ee.sergei.lemmikloomad.entities.Owner;
 import java.util.List;
 
 public interface OwnerService {
-    void addOwner(String name);
+    List<Owner> addOwner(String name);
     List<Owner> getAllOwners();
+
+    void addPetToOwner(String ownerName, String petName);
 }
