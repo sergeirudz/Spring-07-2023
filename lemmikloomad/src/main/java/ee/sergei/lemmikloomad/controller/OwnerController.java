@@ -50,4 +50,12 @@ public class OwnerController {
     ) {
         return ownerService.getHeaviestPetForOwner(id);
     }
+
+    //6. get the lightest pet for one owner
+    @GetMapping("owner/{id}/lightest-pet") // localhost:8080/owner/1/lightest-pet
+    public PetDTO getLightestPetForOwner(
+            @PathVariable("id") Long id
+    ) {
+        return ownerService.getLightestPetForOwner(id);
+    }
 }

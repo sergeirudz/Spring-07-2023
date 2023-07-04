@@ -75,4 +75,23 @@ public class OwnerServiceImpl implements OwnerService {
         log.debug("heaviestPet response: " + heaviestPet);
         return heaviestPetDTO;
     }
+
+    @Override
+    public PetDTO getLightestPetForOwner(Long id) {
+        Owner owner = ownerRepository.findById(id).get();
+        List<Pet> pets = petRepository.findAllByOwner(owner);
+        PetDTO lightestPetDTO = new PetDTO();
+
+        Pet lightestPet = pets.get(0);
+        for (Pet pet : pets) {
+            if (pet.getPetWeight() < lightestPet.getPetWeight()) {
+                lightestPet = pet;
+            }
+        }
+
+        lightestPetDTO.setPetName(lightestPet.getPetName());
+        lightestPetDTO.setPetWeight(lightestPet.getPetWeight());
+
+        return lightestPetDTO;
+    }
 }

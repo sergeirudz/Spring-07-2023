@@ -14,4 +14,6 @@ public interface OwnerService {
     int getNumberOfPetsForOwner(Long id);
 
     PetDTO getHeaviestPetForOwner(Long id);
+
+    PetDTO getLightestPetForOwner(Long id);
 }
