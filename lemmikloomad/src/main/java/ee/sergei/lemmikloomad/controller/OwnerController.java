@@ -58,4 +58,14 @@ public class OwnerController {
     ) {
         return ownerService.getLightestPetForOwner(id);
     }
+
+    // option to insert min and max weight and get all pets in that range
+    @GetMapping("owner/{id}/pets-in-range") // localhost:8080/owner/1/pets-in-range?min=1000&max=5000
+    public List<Pet> getPetsInRange(
+            @PathVariable("id") Long id,
+            @RequestParam("min") double min,
+            @RequestParam("max") double max
+    ) {
+        return ownerService.getPetsInRange(id, min, max);
+    }
 }

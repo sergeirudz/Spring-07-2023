@@ -94,4 +94,24 @@ public class OwnerServiceImpl implements OwnerService {
 
         return lightestPetDTO;
     }
+
+    @Override
+    public List<Pet> getPetsInRange(Long id, double min, double max) {
+        Owner owner = ownerRepository.findById(id).get();
+        List<Pet> pets = petRepository.findAllByOwner(owner);
+/*        Collections.sort(pets);
+        log.debug("pets: " + pets);
+        log.debug("min: " + min);
+        log.debug("max: " + max);
+        for (Pet pet : pets) {
+            log.debug("pet.getPetWeight(): " + pet.getPetWeight());
+        }
+        for (int i = 0; i < pets.size(); i++) {
+            if (pets.get(i).getPetWeight() < min || pets.get(i).getPetWeight() > max) {
+                pets.remove(i);
+                i--;
+            }
+        }*/
+        return pets;
+    }
 }

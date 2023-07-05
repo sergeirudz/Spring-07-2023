@@ -16,4 +16,6 @@ public interface OwnerService {
     PetDTO getHeaviestPetForOwner(Long id);
 
     PetDTO getLightestPetForOwner(Long id);
+
+    List<Pet> getPetsInRange(Long id, double min, double max);
 }
