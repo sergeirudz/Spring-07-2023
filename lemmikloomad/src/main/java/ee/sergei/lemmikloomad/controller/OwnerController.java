@@ -31,10 +31,16 @@ public class OwnerController {
     public Owner findOwnerByPersonalCode(
             @PathVariable("personalCode") String personalCode) {
         return ownerService.findOwnerByPersonalCode(personalCode);
+
+
     }
 
     @GetMapping("owner/all") // ERROR: localhost:8080/owner/all
-    public List<Owner> getAllOwners() {
+    public List<Owner> getAllOwners() throws Exception  {
+
+             /*   if(false == false) {
+            throw new Exception("Error");
+        }*/
 
         /* USING MODELMAPPER
 
