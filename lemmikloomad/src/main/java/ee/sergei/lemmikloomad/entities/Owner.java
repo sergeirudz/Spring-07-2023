@@ -23,4 +23,7 @@ public class Owner {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
     private Set<Pet> pets;
 
+    @Column(name = "personal_code")
+    private String personalCode;
+
 }

@@ -1,11 +1,16 @@
 package ee.sergei.lemmikloomad.controller;
 
+import ee.sergei.lemmikloomad.dto.OwnerDTO;
 import ee.sergei.lemmikloomad.dto.PetDTO;
 import ee.sergei.lemmikloomad.entities.Owner;
 import ee.sergei.lemmikloomad.entities.Pet;
 import ee.sergei.lemmikloomad.service.OwnerService;
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
 import java.util.List;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,9 +27,37 @@ public class OwnerController {
         return ownerService.addOwner(name);
     }
 
+    @GetMapping("owner/personalCode/{personalCode}")
+    public Owner findOwnerByPersonalCode(
+            @PathVariable("personalCode") String personalCode) {
+        return ownerService.findOwnerByPersonalCode(personalCode);
+    }
+
     @GetMapping("owner/all") // ERROR: localhost:8080/owner/all
     public List<Owner> getAllOwners() {
+
+        /* USING MODELMAPPER
+
+        ModelMapper modelMapper = new ModelMapper();
+        List<OwnerDTO> ownerDTOs = new ArrayList<>();
+
+        for(Owner o : ownerService.getAllOwners()) {
+            OwnerDTO ownerDTO = modelMapper.map(o, OwnerDTO.class);
+            ownerDTOs.add(ownerDTO);
+        }
+* */
         return ownerService.getAllOwners();
+
+
+  /*      List<Owner> owners = ownerService.getAllOwners();
+        List<OwnerDTO> ownerDTOs = new ArrayList<>();
+        for(Owner o : owners) {
+            OwnerDTO ownerDTO = new OwnerDTO();
+            ownerDTO.setOwnerName(o.getOwnerName());
+            ownerDTOs.add(ownerDTO);
+        }
+            return ownerDTOs;*/
+
     }
 
     @GetMapping("owner/add-pet")

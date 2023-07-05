@@ -113,4 +113,9 @@ public class OwnerServiceImpl implements OwnerService {
         }*/
         return pets;
     }
+
+    @Override
+    public Owner findOwnerByPersonalCode(String personalCode) {
+        return ownerRepository.findByPersonalCode(personalCode);
+    }
 }

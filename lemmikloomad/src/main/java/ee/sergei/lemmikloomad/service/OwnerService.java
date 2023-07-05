@@ -18,4 +18,6 @@ public interface OwnerService {
     PetDTO getLightestPetForOwner(Long id);
 
     List<Pet> getPetsInRange(Long id, double min, double max);
+
+    Owner findOwnerByPersonalCode(String personalCode);
 }
