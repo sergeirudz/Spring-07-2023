@@ -5,6 +5,7 @@ import ee.sergei.lemmikloomad.entities.Pet;
 import ee.sergei.lemmikloomad.repositories.OwnerRepository;
 import ee.sergei.lemmikloomad.repositories.PetRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -19,6 +20,9 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Autowired
     private OwnerRepository ownerRepository;
+
+    @Autowired
+    ModelMapper modelMapper;
 
 
     @Override
