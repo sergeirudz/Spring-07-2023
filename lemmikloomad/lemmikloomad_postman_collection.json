@@ -1,0 +1,249 @@
+{
+	"info": {
+		"_postman_id": "4f67f19d-1f9f-47f1-9014-79f1bc5d852f",
+		"name": "2. Lemmikloomad",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15319545"
+	},
+	"item": [
+		{
+			"name": "Add Pet",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/pet/add?name=kass3&weight=8000",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pet",
+						"add"
+					],
+					"query": [
+						{
+							"key": "owner",
+							"value": "owner1",
+							"disabled": true
+						},
+						{
+							"key": "name",
+							"value": "kass3"
+						},
+						{
+							"key": "weight",
+							"value": "8000"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Pets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/pet/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pet",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Owner",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/owner/add?name=owner1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"owner",
+						"add"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "owner1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Owners",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/owner/all",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"owner",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Pet to Owner",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/owner/add-pet?ownerName=owner1&petName=kass3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"owner",
+						"add-pet"
+					],
+					"query": [
+						{
+							"key": "ownerName",
+							"value": "owner1"
+						},
+						{
+							"key": "petName",
+							"value": "kass3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all Owner Pets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/owner/1/pets",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"owner",
+						"1",
+						"pets"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get heaviest pet from Owner",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/owner/1/heaviest-pet",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"owner",
+						"1",
+						"heaviest-pet"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Clinic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clinic/add?clinicName=kliinik3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clinic",
+						"add"
+					],
+					"query": [
+						{
+							"key": "clinicName",
+							"value": "kliinik3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Pet to Clinic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clinic/add-pet?clinicName=kliinik3&petName=kass3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clinic",
+						"add-pet"
+					],
+					"query": [
+						{
+							"key": "clinicName",
+							"value": "kliinik3"
+						},
+						{
+							"key": "petName",
+							"value": "kass3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Clinic with most pets",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/clinic/most-pets",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"clinic",
+						"most-pets"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
