@@ -20,4 +20,11 @@ public class ClinicController {
         return clinicService.addClinic(clinicName);
     }
 
+    @GetMapping("clinic/add-pet")
+    public Clinic addPetToClinic(
+            @RequestParam("clinicName") String clinicName,
+            @RequestParam("petName") String petName) {
+        return clinicService.addPetToClinic(clinicName, petName);
+    }
+
 }
