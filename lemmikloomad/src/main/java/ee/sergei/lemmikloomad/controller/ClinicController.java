@@ -27,4 +27,8 @@ public class ClinicController {
         return clinicService.addPetToClinic(clinicName, petName);
     }
 
+    @GetMapping("clinic/most-pets")
+    public Clinic getClinicWithMostPets() {
+        return clinicService.getClinicWithMostPets();
+    }
 }

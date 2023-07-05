@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Slf4j
 @Service
 public class ClinicServiceImpl implements ClinicService {
@@ -36,5 +38,26 @@ public class ClinicServiceImpl implements ClinicService {
         }
 //        log.debug("clinic response: " + clinic);
         return clinic;
+    }
+
+    @Override
+    public Clinic getClinicWithMostPets() {
+        // get all clinics
+
+        List<Clinic> clinics = clinicRepository.findAll();
+        Clinic clinicWithMostPets = null;
+        int maxPets = 0;
+
+        for (Clinic clinic : clinics) {
+            int numPets = clinic.getPets().size();
+            if (numPets > maxPets) {
+                maxPets = numPets;
+                clinicWithMostPets = clinic;
+            }
+        }
+
+        log.debug("clinicWithMostPets response: " + clinicWithMostPets);
+        return clinicWithMostPets;
+
     }
 }
