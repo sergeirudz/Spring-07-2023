@@ -1,9 +1,6 @@
 package ee.sergei.lemmikloomad.dto;
-
 import ee.sergei.lemmikloomad.entities.Pet;
-import jakarta.persistence.*;
 import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Set;
 

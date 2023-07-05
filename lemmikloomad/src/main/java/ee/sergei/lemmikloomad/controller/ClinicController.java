@@ -1,7 +1,6 @@
 package ee.sergei.lemmikloomad.controller;
 
 import ee.sergei.lemmikloomad.dto.ClinicDTO;
-import ee.sergei.lemmikloomad.entities.Clinic;
 import ee.sergei.lemmikloomad.service.ClinicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

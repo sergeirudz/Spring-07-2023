@@ -23,3 +23,7 @@ Tee uus andmebaasitabel Kliinik, mis omab üks-mitmele seost lemmikloomaga. Või
 8. new DB table Kliinik
 9. Kliinik has one to many relationship with pet
 10. API to get only one Kliinik - who has the most pets
+
+NOT FINISHED:
+1. get pets with specific weight range
+2. responses are incorrect and does not include pets.

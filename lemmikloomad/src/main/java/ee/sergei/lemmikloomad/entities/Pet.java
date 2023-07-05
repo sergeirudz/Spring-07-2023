@@ -2,8 +2,6 @@ package ee.sergei.lemmikloomad.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
-
 @Entity
 @Table(name="pet")
 @Data

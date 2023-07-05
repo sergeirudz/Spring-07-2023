@@ -1,5 +1,4 @@
 package ee.sergei.lemmikloomad.service;
-
 import ee.sergei.lemmikloomad.dto.PetDTO;
 import ee.sergei.lemmikloomad.entities.Owner;
 import ee.sergei.lemmikloomad.entities.Pet;
@@ -8,8 +7,6 @@ import ee.sergei.lemmikloomad.repositories.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 
 
@@ -45,8 +42,6 @@ public class OwnerServiceImpl implements OwnerService {
         if (owner != null && pet != null) {
             pet.setOwner(owner);
             petRepository.save(pet);
-//            owner.getPets().add(pet);
-//            ownerRepository.save(owner);
         }
     }
 

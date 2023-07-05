@@ -11,7 +11,6 @@ import java.util.Set;
 @Setter
 public class Owner {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

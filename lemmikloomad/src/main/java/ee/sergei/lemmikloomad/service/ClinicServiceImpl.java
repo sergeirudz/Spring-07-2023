@@ -1,5 +1,4 @@
 package ee.sergei.lemmikloomad.service;
-
 import ee.sergei.lemmikloomad.dto.ClinicDTO;
 import ee.sergei.lemmikloomad.entities.Clinic;
 import ee.sergei.lemmikloomad.entities.Pet;
@@ -8,7 +7,6 @@ import ee.sergei.lemmikloomad.repositories.PetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Slf4j
@@ -53,7 +51,6 @@ public class ClinicServiceImpl implements ClinicService {
 
     @Override
     public ClinicDTO getClinicWithMostPets() {
-        // get all clinics
 
         List<Clinic> clinics = clinicRepository.findAll();
         Clinic clinicWithMostPets = null;
