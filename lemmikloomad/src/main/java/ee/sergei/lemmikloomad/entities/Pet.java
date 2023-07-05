@@ -21,4 +21,6 @@ public class Pet {
     @ManyToOne
     @JoinColumn(name = "clinic_name", nullable = true)
     private Clinic clinic;
+
+
 }

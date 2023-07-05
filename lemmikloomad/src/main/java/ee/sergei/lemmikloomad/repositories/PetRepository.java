@@ -14,4 +14,10 @@ public interface PetRepository extends JpaRepository<Pet, String>{
     Pet findByPetName(String petName);
     Pet findByOwner(Owner owner);
     List<Pet> findAllByOwner(Owner owner);
+
+    Pet findFirstByOrderByPetWeightAsc();
+    Pet findFirstByOrderByPetWeightDesc();
+    List<Pet> findAllByPetWeightIsBetween(double min, double max);
+
+    List<Pet> findAllByPetWeightGreaterThan(double min);
 }
