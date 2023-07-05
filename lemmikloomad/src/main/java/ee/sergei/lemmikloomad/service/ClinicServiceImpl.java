@@ -1,5 +1,6 @@
 package ee.sergei.lemmikloomad.service;
 
+import ee.sergei.lemmikloomad.dto.ClinicDTO;
 import ee.sergei.lemmikloomad.entities.Clinic;
 import ee.sergei.lemmikloomad.entities.Pet;
 import ee.sergei.lemmikloomad.repositories.ClinicRepository;
@@ -21,27 +22,37 @@ public class ClinicServiceImpl implements ClinicService {
     private PetRepository petRepository;
 
     @Override
-    public Clinic addClinic(String clinicName) {
+    public ClinicDTO addClinic(String clinicName) {
         Clinic clinic = new Clinic();
         clinic.setClinicName(clinicName);
-        return clinicRepository.save(clinic);
+
+        ClinicDTO clinicDTO = new ClinicDTO();
+        clinicDTO.setClinicName(clinicName);
+
+        clinicRepository.save(clinic);
+
+        return clinicDTO;
     }
 
     @Override
-    public Clinic addPetToClinic(String clinicName, String petName) {
+    public ClinicDTO addPetToClinic(String clinicName, String petName) {
         Clinic clinic = clinicRepository.findByClinicName(clinicName);
         Pet pet = petRepository.findByPetName(petName);
+
+        ClinicDTO clinicDTO = new ClinicDTO();
 
         if (clinic != null && pet != null) {
             pet.setClinic(clinic);
             petRepository.save(pet);
+            clinicDTO.setClinicName(clinicName);
         }
+
 //        log.debug("clinic response: " + clinic);
-        return clinic;
+        return clinicDTO;
     }
 
     @Override
-    public Clinic getClinicWithMostPets() {
+    public ClinicDTO getClinicWithMostPets() {
         // get all clinics
 
         List<Clinic> clinics = clinicRepository.findAll();
@@ -56,8 +67,12 @@ public class ClinicServiceImpl implements ClinicService {
             }
         }
 
+        ClinicDTO clinicDTO = new ClinicDTO();
+        clinicDTO.setClinicName(clinicWithMostPets.getClinicName());
+
+
         log.debug("clinicWithMostPets response: " + clinicWithMostPets);
-        return clinicWithMostPets;
+        return clinicDTO;
 
     }
 }
