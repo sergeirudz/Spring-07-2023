@@ -1,59 +1,58 @@
 package sergei.webshop.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
 
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class OmnivaPM {
     @JsonProperty("ZIP")
-    public String zIP;
+    private String zIP;
     @JsonProperty("NAME")
-    public String nAME;
+    private String nAME;
     @JsonProperty("TYPE")
-    public String tYPE;
+    private String tYPE;
     @JsonProperty("A0_NAME")
-    public String a0_NAME;
+    private String a0_NAME;
     @JsonProperty("A1_NAME")
-    public String a1_NAME;
+    private String a1_NAME;
     @JsonProperty("A2_NAME")
-    public String a2_NAME;
+    private String a2_NAME;
     @JsonProperty("A3_NAME")
-    public String a3_NAME;
+    private String a3_NAME;
     @JsonProperty("A4_NAME")
-    public String a4_NAME;
+    private String a4_NAME;
     @JsonProperty("A5_NAME")
-    public String a5_NAME;
+    private String a5_NAME;
     @JsonProperty("A6_NAME")
-    public String a6_NAME;
+    private String a6_NAME;
     @JsonProperty("A7_NAME")
-    public String a7_NAME;
+    private String a7_NAME;
     @JsonProperty("A8_NAME")
-    public String a8_NAME;
+    private String a8_NAME;
     @JsonProperty("X_COORDINATE")
-    public String x_COORDINATE;
+    private String x_COORDINATE;
     @JsonProperty("Y_COORDINATE")
-    public String y_COORDINATE;
+    private String y_COORDINATE;
     @JsonProperty("SERVICE_HOURS")
-    public String sERVICE_HOURS;
+    private String sERVICE_HOURS;
     @JsonProperty("TEMP_SERVICE_HOURS")
-    public String tEMP_SERVICE_HOURS;
+    private String tEMP_SERVICE_HOURS;
     @JsonProperty("TEMP_SERVICE_HOURS_UNTIL")
-    public String tEMP_SERVICE_HOURS_UNTIL;
+    private String tEMP_SERVICE_HOURS_UNTIL;
     @JsonProperty("TEMP_SERVICE_HOURS_2")
-    public String tEMP_SERVICE_HOURS_2;
+    private String tEMP_SERVICE_HOURS_2;
     @JsonProperty("TEMP_SERVICE_HOURS_2_UNTIL")
-    public String tEMP_SERVICE_HOURS_2_UNTIL;
-    public String comment_est;
-    public String comment_eng;
-    public String comment_rus;
-    public String comment_lav;
-    public String comment_lit;
+    private String tEMP_SERVICE_HOURS_2_UNTIL;
+    private String comment_est;
+    private String comment_eng;
+    private String comment_rus;
+    private String comment_lav;
+    private String comment_lit;
     @JsonProperty("MODIFIED")
-    public Date mODIFIED;
+    private Date mODIFIED;
 }
