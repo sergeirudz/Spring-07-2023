@@ -8,4 +8,6 @@ public interface PlayerService {
     PlayerDTO addPlayer(PlayerDTO playerDTO);
 
     String addScore(GameScoreDTO gameScoreDTO);
+
+    int getTotalPlayerScore(Long playerId);
 }

@@ -56,6 +56,11 @@ public class PlayerServiceImpl implements PlayerService {
         return eventPoints + " points added. " + "Player has now a total of " + totalPoints +  " points.";
     }
 
+    @Override
+    public int getTotalPlayerScore(Long playerId) {
+        return gameScoreRepository.calculateTotalPointsByPlayerId(playerId);
+    }
+
 
     private static class DecathlonPointsCalculator {
         public static int calculateEventPoints(double timeInSeconds, DecathlonEvent event) {

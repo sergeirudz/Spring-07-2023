@@ -1,9 +1,7 @@
 package sergei.sports.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sergei.sports.dto.GameScoreDTO;
 import sergei.sports.dto.PlayerDTO;
 import sergei.sports.service.PlayerService;
@@ -14,6 +12,14 @@ public class PlayerController {
 
     private final PlayerService playerService;
 
+    /*
+    // http://localhost:8080/player/add
+    {
+    "name": "John Smith",
+    "age": 33,
+    "country": "USA"
+    }
+    */
     @PostMapping("player/add")
     public PlayerDTO addPlayer(
             @RequestBody PlayerDTO playerDTO
@@ -37,6 +43,16 @@ public class PlayerController {
     ) {
         {
             return playerService.addScore(gameScoreDTO);
+        }
+    }
+
+
+    @GetMapping("player/{playerId}/score")
+    public int getTotalPlayerScore(
+            @PathVariable Long playerId
+    ) {
+        {
+            return playerService.getTotalPlayerScore(playerId);
         }
     }
 }
