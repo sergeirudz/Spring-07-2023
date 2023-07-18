@@ -1,20 +1,49 @@
 package sergei.webshop.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import sergei.webshop.dto.OrderDTO;
 import sergei.webshop.dto.everypay.EverypayData;
 import sergei.webshop.dto.everypay.EverypayResponse;
+import sergei.webshop.service.OrderService;
 
 import java.time.ZonedDateTime;
 
+@RequiredArgsConstructor
+@RestController
 public class OrderController {
+
+    private final OrderService orderService;
 
     // KODUS: Kõikide võtmine, Lisamine???, Kustutamine, Ühe võtmine, Muutmine???
     //                      korraga tuleb lisada OrderRow
 
+    @GetMapping("orders")
+    public ResponseEntity<OrderDTO> getOrders() {
+        return orderService.getAllOrders();
+    }
+
+    @PostMapping("orders")
+    public ResponseEntity<OrderDTO> addOrder(@RequestBody OrderDTO orderDTO) {
+        return orderService.addOrder(orderDTO);
+    }
+
+    @DeleteMapping("orders/{id}")
+    public ResponseEntity<OrderDTO> deleteOrder(@PathVariable Long id) {
+        return orderService.deleteOrder(id);
+    }
+
+    @GetMapping("orders/{id}")
+    public ResponseEntity<OrderDTO> getOrder(@PathVariable Long id) {
+        return orderService.getOrder(id);
+    }
+
+
+
+
+    // TODO PAYMENT ENDPOINT
     @GetMapping("payment/{sum}")
     public String pay(@PathVariable double sum,
                       @RequestBody String orderReference
