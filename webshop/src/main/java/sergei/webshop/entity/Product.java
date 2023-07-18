@@ -22,6 +22,10 @@ public class Product {
     private String description;
     private int stock;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 }

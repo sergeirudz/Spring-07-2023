@@ -28,6 +28,6 @@ public class Person {
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private ContactData contactData;
+    private PersonContactData personContactData;
 
 }

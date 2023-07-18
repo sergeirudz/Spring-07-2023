@@ -1,7 +1,6 @@
 package sergei.webshop.dto;
 
 import lombok.Data;
-import sergei.webshop.entity.ContactData;
 
 @Data
 public class PersonDTO {
