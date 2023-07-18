@@ -1,6 +1,7 @@
-package sergei.webshop.dto;
+package sergei.webshop.dto.ParcelMachines;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.Setter;
 
 @Data

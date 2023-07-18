@@ -1,93 +1,46 @@
 package sergei.webshop.controller;
 
+import sergei.webshop.dto.nordpool.Nordpool;
+import sergei.webshop.dto.nordpool.TimestampPrice;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
-import sergei.webshop.dto.*;
 
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 public class NordpoolController {
 
-
-    @GetMapping("nordpool") // http://localhost:8080/nordpool // ee,lt,lv,fi
-    public NordpoolResult getNordpoolPrices(
-            @RequestParam("country") Optional<String> countryCode,
-            @RequestParam("startDate") Optional<String> startDate,
-            @RequestParam("endDate") Optional<String> endDate
+    @GetMapping("nordpool") // ee, lt, lv, fi
+    public List<TimestampPrice> getNordpoolPrices(
+            @RequestParam String country
     ) {
-
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Nordpool> response = restTemplate.exchange("https://dashboard.elering.ee/api/nps/price", HttpMethod.GET, null, Nordpool.class);
-        Nordpool nordpool = response.getBody();
-
-        NordpoolResult nordpoolResult = new NordpoolResult();
-        List<TimestampPrice> filteredPrices = new ArrayList<>();
-
-        System.out.println("Country code: " + countryCode);
-        if (!countryCode.isPresent() || countryCode.get().isEmpty()) {
-            nordpoolResult.setNordpool(nordpool);
-        } else {
-            List<TimestampPrice> prices = getPricesByCountryCode(nordpool, countryCode.get());
-            System.out.println("Prices for country code " + countryCode.get() + ": " + prices);
-            nordpoolResult.setCountryPrices(prices);
-            filteredPrices = prices; // Initialize the filteredPrices with the initial prices
-        }
-
-        if (startDate.isPresent() && endDate.isPresent()) {
-            LocalDateTime startDateTime = LocalDateTime.parse(startDate.get());
-            LocalDateTime endDateTime = LocalDateTime.parse(endDate.get());
-            filteredPrices = filterPricesByDateTime(filteredPrices, startDateTime, endDateTime);
-            System.out.println(filteredPrices);
-            nordpoolResult.setCountryPrices(filteredPrices);
-        }
-
-        return nordpoolResult;
-
-
-        // TODO: Apply startDate and endDate filters to the prices
-        // TODO: return one country at a time
-        // TODO: return startDate and endDate
-        // https://dashboard.elering.ee/api/nps/price?start=2023-05-20T12%3A59%3A59.999Z&end=2023-05-24T20%3A59%3A59.999Z
         // https://dashboard.elering.ee/api/nps/price?start=2023-05-20T12%3A59%3A59.999Z&end=2023-05-24T20%3A59%3A59.999Z
         // https://dashboard.elering.ee/api/nps/price?start=2023-05-20T12:59:59.999Z&end=2023-05-24T20:59:59.999Z
 
 
-    }
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Nordpool> response = restTemplate.exchange("https://dashboard.elering.ee/api/nps/price",
+                HttpMethod.GET,null, Nordpool.class);
 
-    private List<TimestampPrice> filterPricesByDateTime(List<TimestampPrice> prices, LocalDateTime startDate, LocalDateTime endDate) {
-        return prices.stream()
-                .filter(price -> {
-                    LocalDateTime timestamp = LocalDateTime.ofEpochSecond(price.getTimestamp(), 0, ZoneOffset.UTC);
-                    return timestamp.isAfter(startDate) && timestamp.isBefore(endDate);
-                })
-                .collect(Collectors.toList());
-    }
+        // KODUS: Tehke ühe riigi kaupa tagastamine
 
-    public List<TimestampPrice> getPricesByCountryCode(Nordpool nordpool, String countryCode) {
-        CountryPrices countryPrices = (CountryPrices) nordpool.getCountryPrices();
+        Nordpool nordpoolResponse = response.getBody();
 
-        switch (countryCode.toUpperCase()) {
-            case "EE":
-                return countryPrices.getEe();
-            case "FI":
-                return countryPrices.getFi();
-            case "LV":
-                return countryPrices.getLv();
-            case "LT":
-                return countryPrices.getLt();
-            default:
-                return Collections.emptyList(); // Return an empty list for unknown country codes
+        if (nordpoolResponse == null) {
+            return new ArrayList<>();
         }
 
+        return switch (country) {
+            case "ee" -> response.getBody().getData().getEe();
+            case "lv" -> response.getBody().getData().getLv();
+            case "lt" -> response.getBody().getData().getLt();
+            case "fi" -> response.getBody().getData().getFi();
+            default -> new ArrayList<>();
+        };
     }
 }
-
