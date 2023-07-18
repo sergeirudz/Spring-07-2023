@@ -1,4 +1,4 @@
-package sergei.webshop.dto;
+package sergei.webshop.dto.nordpool;
 
 import lombok.Data;
 

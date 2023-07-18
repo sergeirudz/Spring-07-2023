@@ -1,4 +1,4 @@
-package sergei.webshop.dto;
+package sergei.webshop.dto.ParcelMachines;
 
 import lombok.Data;
 
