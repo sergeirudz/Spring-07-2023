@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import sergei.webshop.dto.PersonDTO;
-import sergei.webshop.entity.Address;
-import sergei.webshop.entity.ContactData;
+import sergei.webshop.entity.PersonAddress;
+import sergei.webshop.entity.PersonContactData;
 import sergei.webshop.entity.Person;
 import sergei.webshop.repository.AddressRepository;
 import sergei.webshop.repository.ContactDataRepository;
@@ -51,20 +51,20 @@ public class PersonServiceImpl implements PersonService {
         }
 
 
-        Address address = new Address();
-        address.setCountry(personDTO.getContactData().getAddress().getCountry());
-        address.setCounty(personDTO.getContactData().getAddress().getCounty());
-        address.setStreet(personDTO.getContactData().getAddress().getStreet());
-        address.setNumber(personDTO.getContactData().getAddress().getNumber());
-        address.setPostalIndex(personDTO.getContactData().getAddress().getPostalIndex());
-        addressRepository.save(address);
+        PersonAddress personAddress = new PersonAddress();
+        personAddress.setCountry(personDTO.getContactData().getAddress().getCountry());
+        personAddress.setCounty(personDTO.getContactData().getAddress().getCounty());
+        personAddress.setStreet(personDTO.getContactData().getAddress().getStreet());
+        personAddress.setNumber(personDTO.getContactData().getAddress().getNumber());
+        personAddress.setPostalIndex(personDTO.getContactData().getAddress().getPostalIndex());
+        addressRepository.save(personAddress);
 
-        // Create and save the ContactData
-        ContactData contactData = new ContactData();
-        contactData.setEmail(personDTO.getContactData().getEmail());
-        contactData.setPhone(personDTO.getContactData().getPhone());
-        contactData.setAddress(address);
-        contactDataRepository.save(contactData);
+        // Create and save the PersonContactData
+        PersonContactData personContactData = new PersonContactData();
+        personContactData.setEmail(personDTO.getContactData().getEmail());
+        personContactData.setPhone(personDTO.getContactData().getPhone());
+        personContactData.setPersonAddress(personAddress);
+        contactDataRepository.save(personContactData);
 
         // Create and save the Person
         Person person = new Person();
@@ -72,7 +72,7 @@ public class PersonServiceImpl implements PersonService {
         person.setFirstName(personDTO.getFirstName());
         person.setLastName(personDTO.getLastName());
         person.setPassword(personDTO.getPassword());
-        person.setContactData(contactData);
+        person.setPersonContactData(personContactData);
         personRepository.save(person);
 
         PersonDTO createdPersonDTO = modelMapper.map(person, PersonDTO.class);
@@ -135,49 +135,49 @@ public class PersonServiceImpl implements PersonService {
         }
 
         if (personDTO.getContactData() != null) {
-            ContactData contactData = person.getContactData();
-            if (contactData == null) {
-                contactData = new ContactData();
+            PersonContactData personContactData = person.getPersonContactData();
+            if (personContactData == null) {
+                personContactData = new PersonContactData();
             }
 
             if(personDTO.getContactData().getEmail() != null) {
-                contactData.setEmail(personDTO.getContactData().getEmail());
+                personContactData.setEmail(personDTO.getContactData().getEmail());
             }
 
             if (personDTO.getContactData().getPhone() != null) {
-                contactData.setPhone(personDTO.getContactData().getPhone());
+                personContactData.setPhone(personDTO.getContactData().getPhone());
             }
 
             if (personDTO.getContactData().getAddress() != null) {
-                Address address = contactData.getAddress();
-                if (address == null) {
-                    address = new Address();
+                PersonAddress personAddress = personContactData.getPersonAddress();
+                if (personAddress == null) {
+                    personAddress = new PersonAddress();
                 }
 
                 if(personDTO.getContactData().getAddress().getCountry() != null) {
-                    address.setCountry(personDTO.getContactData().getAddress().getCountry());
+                    personAddress.setCountry(personDTO.getContactData().getAddress().getCountry());
                 }
 
                 if(personDTO.getContactData().getAddress().getCounty() != null) {
-                    address.setCounty(personDTO.getContactData().getAddress().getCounty());
+                    personAddress.setCounty(personDTO.getContactData().getAddress().getCounty());
                 }
 
                 if(personDTO.getContactData().getAddress().getStreet() != null) {
-                    address.setStreet(personDTO.getContactData().getAddress().getStreet());
+                    personAddress.setStreet(personDTO.getContactData().getAddress().getStreet());
                 }
 
                 if(personDTO.getContactData().getAddress().getNumber() != null) {
-                    address.setNumber(personDTO.getContactData().getAddress().getNumber());
+                    personAddress.setNumber(personDTO.getContactData().getAddress().getNumber());
                 }
 
                 if(personDTO.getContactData().getAddress().getPostalIndex() != null) {
-                    address.setPostalIndex(personDTO.getContactData().getAddress().getPostalIndex());
+                    personAddress.setPostalIndex(personDTO.getContactData().getAddress().getPostalIndex());
                 }
 
-                contactData.setAddress(address);
+                personContactData.setPersonAddress(personAddress);
             }
 
-            person.setContactData(contactData);
+            person.setPersonContactData(personContactData);
         }
 
         personRepository.save(person);

@@ -11,12 +11,12 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ContactData {
+public class PersonContactData {
 
-    public ContactData(String email, String phone, Address address) {
+    public PersonContactData(String email, String phone, PersonAddress personAddress) {
         this.email = email;
         this.phone = phone;
-        this.address = address;
+        this.personAddress = personAddress;
     }
 
     @Id
@@ -29,6 +29,6 @@ public class ContactData {
     private String phone;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    private Address address;
+    private PersonAddress personAddress;
 
 }
