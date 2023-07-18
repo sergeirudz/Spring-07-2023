@@ -32,9 +32,9 @@ public class Order {
     private double totalSum;
 
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderRow> orderRows; //  = new ArrayList<>();
+    private List<OrderRow> orderRows;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "personId")
     private Person person;
 }

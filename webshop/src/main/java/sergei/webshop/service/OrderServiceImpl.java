@@ -41,7 +41,15 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<OrderDTO> getAllOrders() {
-        return null;
+        List<Order> orders = orderRepository.findAll();
+        List<OrderDTO> orderDTOs = new ArrayList<>();
+
+        for (Order order : orders) {
+            OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+            orderDTOs.add(orderDTO);
+        }
+
+        return new ResponseEntity(orderDTOs, HttpStatus.OK);
     }
 
     @Override
@@ -94,11 +102,17 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public ResponseEntity<OrderDTO> deleteOrder(Long id) {
-        return null;
+        orderRepository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<OrderDTO> getOrder(Long id) {
-        return null;
+        Order order = orderRepository.findById(id).orElse(null);
+        if (order == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+        return new ResponseEntity<>(orderDTO, HttpStatus.OK);
     }
 }
