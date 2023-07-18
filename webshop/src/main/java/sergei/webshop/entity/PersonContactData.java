@@ -12,23 +12,19 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 public class PersonContactData {
-
-    public PersonContactData(String email, String phone, PersonAddress personAddress) {
-        this.email = email;
-        this.phone = phone;
-        this.personAddress = personAddress;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "personContactDataId")
     private Long id;
-    @Column(unique = true)
+
+    @Column(name = "email", unique = true)
     private String email;
 
-    @Column()
+    @Column(name = "phone") // maybe unique = true
     private String phone;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "personAddressId")
     private PersonAddress personAddress;
 
 }

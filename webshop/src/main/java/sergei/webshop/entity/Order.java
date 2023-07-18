@@ -6,24 +6,35 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "orders") // PostgreSQL sees on "order" ja "user" reserveeritud
+@Table(name = "orders") // PostgreSQL "order" & "user" are reserved words
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "orderId")
     private Long id;
-    private Date creationDate;
-    private String paymentState;
-    private double totalSum;
-    @OneToOne
-    private OrderRow orderRow;
-    @ManyToOne
-    private Person person;
 
+    @Column(name = "creationDate")
+    private Date creationDate;
+
+    @Column(name = "paymentState")
+    private String paymentState; // SHOULD THIS BE ENUM?
+
+    @Column(name = "totalSum")
+    private double totalSum;
+
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderRow> orderRows; //  = new ArrayList<>();
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "personId")
+    private Person person;
 }

@@ -10,24 +10,25 @@ import lombok.*;
 @Entity
 //@Builder
 public class Person {
-
-    public Person(String personalCode, String firstName, String lastName, String password) {
-        this.personalCode = personalCode;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.password = password;
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "personId")
     private Long id;
-    @Column(unique = true)
+
+    @Column(name = "personalCode", unique = true)
     private String personalCode;
+
+    @Column(name = "firstName")
     private String firstName;
+
+    @Column(name = "lastName")
     private String lastName;
+
+    @Column(name = "password")
     private String password;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "personContactDataId")
     private PersonContactData personContactData;
 
 }
