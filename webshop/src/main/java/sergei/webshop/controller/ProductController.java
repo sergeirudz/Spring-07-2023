@@ -1,45 +1,42 @@
 package sergei.webshop.controller;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import sergei.webshop.dto.ProductDTO;
 import sergei.webshop.entity.Product;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sergei.webshop.repository.ProductRepository;
+import sergei.webshop.service.ProductService;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 @RestController
 public class ProductController {
 
-    @Autowired
-    ProductRepository productRepository;
+    private final ProductService productService;
 
     @GetMapping("products")
-    public List<Product> getProducts() {
-        return productRepository.findAll();
+    public ResponseEntity<List<ProductDTO>> getProducts() {
+     return productService.getAllProducts();
     }
 
     @PostMapping("products")
-    public List<Product> addProduct(@RequestBody Product product) {
-        productRepository.save(product);
-        return productRepository.findAll();
+    public ResponseEntity<ProductDTO> addProduct(@RequestBody Product productDTO) {
+        return productService.addProduct(productDTO);
     }
 
     @DeleteMapping("products/{id}")
-    public List<Product> deleteProduct(@PathVariable Long id) {
-        productRepository.deleteById(id);
-        return productRepository.findAll();
+    public ResponseEntity<List<ProductDTO>> deleteProduct(@PathVariable Long id) {
+        return productService.deleteProduct(id);
     }
 
     @GetMapping("products/{id}")
-    public Product getProduct(@PathVariable Long id) {
-        return productRepository.findById(id).get();
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id) {
+        return productService.getProduct(id);
     }
 
     @PutMapping("products/{id}")
-    public List<Product> getProduct(@PathVariable Long id, @RequestBody Product product) {
-        if (productRepository.existsById(id)) {
-            productRepository.save(product);
-        }
-        return productRepository.findAll();
+    public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+        return productService.updateProduct(id, productDTO);
     }
 }
