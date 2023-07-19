@@ -5,9 +5,11 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import sergei.webshop.dto.OrderDTO;
+import sergei.webshop.dto.PaymentDTO;
 import sergei.webshop.dto.everypay.EverypayData;
 import sergei.webshop.dto.everypay.EverypayResponse;
 import sergei.webshop.service.OrderService;
+import sergei.webshop.service.PaymentService;
 
 import java.time.ZonedDateTime;
 
@@ -16,6 +18,8 @@ import java.time.ZonedDateTime;
 public class OrderController {
 
     private final OrderService orderService;
+
+    private final PaymentService paymentService;
 
     // KODUS: Kõikide võtmine, Lisamine???, Kustutamine, Ühe võtmine, Muutmine???
     //                      korraga tuleb lisada OrderRow
@@ -41,16 +45,17 @@ public class OrderController {
     }
 
 
+    @PostMapping("payment/{id}")
+    public String payOrder(
+            @PathVariable Long id) throws Exception {
+        return paymentService.payOrder(id);
+    }
 
 
-    // TODO PAYMENT ENDPOINT
+/*    // TODO PAYMENT ENDPOINT
     @GetMapping("payment/{sum}")
     public String pay(@PathVariable double sum,
-                      @RequestBody String orderReference
-
-                      ) {
-
-
+                      @RequestBody String orderReference) {
         RestTemplate restTemplate = new RestTemplate();
 
         String url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
@@ -75,5 +80,5 @@ public class OrderController {
         ResponseEntity<EverypayResponse> response = restTemplate.exchange(url, HttpMethod.POST, httpEntity, EverypayResponse.class);
 
         return response.getBody().getPayment_link();
-    }
+    }*/
 }
