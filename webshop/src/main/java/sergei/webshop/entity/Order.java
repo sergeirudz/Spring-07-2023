@@ -37,4 +37,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "personId")
     private Person person;
+
+    @OneToMany(mappedBy = "orderReference", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Payment> payments;
+
 }
