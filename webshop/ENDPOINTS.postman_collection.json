@@ -417,7 +417,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"paymentState\": \"PAID\",\n  \"orderRow\": [\n    {\n      \"product\": {\n        \"id\": 1\n      },\n      \"quantity\": 1\n    },\n    {\n      \"product\": {\n        \"id\": 3\n      },\n      \"quantity\": 1\n    }\n  ],\n  \"person\": {\n    \"id\": 1\n  }\n}",
+					"raw": "{\n  \"orderRows\": [\n    {\n      \"product\": {\n        \"id\": 1\n      },\n      \"quantity\": 1\n    },\n    {\n      \"product\": {\n        \"id\": 2\n      },\n      \"quantity\": 1\n    }\n  ],\n  \"person\": {\n    \"id\": 1\n  }\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -492,26 +492,6 @@
 					"path": [
 						"orders",
 						"16"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "payment payOrder",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"url": {
-					"raw": "http://localhost:8080/payment/1",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8080",
-					"path": [
-						"payment",
-						"1"
 					]
 				}
 			},
