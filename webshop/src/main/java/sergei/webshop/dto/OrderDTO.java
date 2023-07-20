@@ -1,6 +1,7 @@
 package sergei.webshop.dto;
 
 import lombok.Data;
+import sergei.webshop.entity.PaymentStatus;
 
 import java.util.Date;
 import java.util.List;
@@ -10,9 +11,9 @@ public class OrderDTO {
 
     private Long id;
     private Date creationDate;
-    private String paymentState;
+    private PaymentStatus paymentState;
     private double totalSum;
-    private List<OrderRowDTO> orderRow;
+    private List<OrderRowsDTO> orderRows;
     private PersonDTO person;
 
 }

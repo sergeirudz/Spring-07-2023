@@ -1,24 +1,20 @@
 package sergei.webshop.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "orders") // PostgreSQL "order" & "user" are reserved words
+@SequenceGenerator(name = "seq", initialValue = 20230715, allocationSize = 1)
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     @Column(name = "orderId")
     private Long id;
 
@@ -26,7 +22,7 @@ public class Order {
     private Date creationDate;
 
     @Column(name = "paymentState")
-    private String paymentState; // SHOULD THIS BE ENUM?
+    private PaymentStatus paymentState;
 
     @Column(name = "totalSum")
     private double totalSum;
