@@ -3,20 +3,20 @@ package sergei.webshop.service;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import sergei.webshop.dto.OrderDTO;
-import sergei.webshop.dto.OrderRowDTO;
-import sergei.webshop.entity.Order;
-import sergei.webshop.entity.OrderRow;
-import sergei.webshop.entity.Person;
-import sergei.webshop.entity.Product;
+import sergei.webshop.dto.OrderRowsDTO;
+import sergei.webshop.dto.everypay.EverypayData;
+import sergei.webshop.dto.everypay.EverypayResponse;
+import sergei.webshop.entity.*;
 import sergei.webshop.repository.OrderRepository;
 import sergei.webshop.repository.OrderRowRepository;
 import sergei.webshop.repository.PersonRepository;
 import sergei.webshop.repository.ProductRepository;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -54,51 +54,86 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     @Transactional
-    public ResponseEntity<OrderDTO> addOrder(OrderDTO orderDTO) {
+    public ResponseEntity<String> createPayOrder(OrderDTO orderDTO) throws Exception {
+        double totalSum = calculateTotalSum(orderDTO.getOrderRows());
+
         Order order = new Order();
         order.setCreationDate(new Date());
         order.setPaymentState(orderDTO.getPaymentState());
+        order.setTotalSum(totalSum);
 
-        double totalSum = 0;
+        Order savedOrder = orderRepository.save(order);
 
-        Person person = personRepository.findById(orderDTO.getPerson().getId()).orElse(null);
-        if (person == null) {
-            throw new IllegalArgumentException("Person with the given id does not exist.");
-        }
-        order.setPerson(person);
+        List<OrderRowsDTO> orderRowsDTOS = orderDTO.getOrderRows();
 
-        List<OrderRowDTO> orderRowDTOs = orderDTO.getOrderRow();
-
-        if (orderRowDTOs != null && !orderRowDTOs.isEmpty()) {
+        if (orderRowsDTOS != null && !orderRowsDTOS.isEmpty()) {
             List<OrderRow> orderRows = new ArrayList<>();
 
-            for (OrderRowDTO orderRowDTO : orderRowDTOs) {
-                Product product = productRepository.findById(orderRowDTO.getProduct().getId()).orElse(null);
+            for (OrderRowsDTO orderRowsDTO : orderRowsDTOS) {
+                Product product = productRepository.findById(orderRowsDTO.getProduct().getId()).orElse(null);
                 if (product == null) {
                     throw new IllegalArgumentException("Product with the given id does not exist.");
                 }
 
                 OrderRow orderRow = new OrderRow();
                 orderRow.setProduct(product);
-                orderRow.setQuantity(orderRowDTO.getQuantity());
-                orderRow.setOrders(order);
+                orderRow.setQuantity(orderRowsDTO.getQuantity());
+                orderRow.setOrders(savedOrder);
                 orderRows.add(orderRow);
                 orderRowRepository.save(orderRow);
 
-                // Calculate the subtotal for each order row and add it to the total sum
-                double subtotal = product.getPrice() * orderRowDTO.getQuantity();
+                double subtotal = product.getPrice() * orderRowsDTO.getQuantity();
                 totalSum += subtotal;
             }
 
+            savedOrder.setOrderRows(orderRows);
         }
-        order.setTotalSum(totalSum);
 
-        orderRepository.save(order);
+        savedOrder.setTotalSum(totalSum);
 
-        OrderDTO createdOrderDTO = modelMapper.map(order, OrderDTO.class);
+        orderRepository.save(savedOrder);
 
-        return new ResponseEntity<>(createdOrderDTO, HttpStatus.CREATED);
+        String paymentUrl = makePayment(totalSum, savedOrder.getId());
+        return new ResponseEntity<>(paymentUrl, HttpStatus.CREATED);
     }
+
+    public String makePayment(double totalSum, Long orderId) throws Exception {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set(HttpHeaders.AUTHORIZATION, "Basic ZTM2ZWI0MGY1ZWM4N2ZhMjo3YjkxYTNiOWUxYjc0NTI0YzJlOWZjMjgyZjhhYzhjZA==");
+        headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+
+        EverypayData body = new EverypayData();
+        body.setApi_username("e36eb40f5ec87fa2");
+        body.setAccount_name("EUR3D1");
+        body.setAmount(totalSum);
+        body.setOrder_reference(orderId.toString());
+        body.setNonce("adasdsad3121" + ZonedDateTime.now() + Math.random());
+        body.setTimestamp(ZonedDateTime.now().toString());
+        body.setCustomer_url("https://maksmine.web.app/makse");
+
+        HttpEntity<EverypayData> httpEntity = new HttpEntity<>(body, headers);
+        ResponseEntity<EverypayResponse> response = restTemplate.exchange(url, HttpMethod.POST, httpEntity, EverypayResponse.class);
+        return response.getBody().getPayment_link();
+    }
+
+    private double calculateTotalSum(List<OrderRowsDTO> orderRows) throws Exception {
+        double totalSum = 0;
+
+        for (OrderRowsDTO order : orderRows) {
+            Product product = productRepository.findById(order.getProduct().getId()).orElse(null);
+            if (product == null) {
+                throw new IllegalArgumentException("Product with the given id does not exist.");
+            }
+            double subtotal = product.getPrice() * order.getQuantity();
+            totalSum += subtotal;
+        }
+
+        return totalSum;
+    }
+
 
     @Override
     public ResponseEntity<OrderDTO> deleteOrder(Long id) {
@@ -115,4 +150,6 @@ public class OrderServiceImpl implements OrderService {
         OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
         return new ResponseEntity<>(orderDTO, HttpStatus.OK);
     }
+
+
 }

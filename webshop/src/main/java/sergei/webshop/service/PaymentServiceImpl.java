@@ -46,7 +46,7 @@ public class PaymentServiceImpl implements PaymentService {
         Payment temporaryPayment = new Payment();
         temporaryPayment.setAmount(orderFound.getTotalSum());
         temporaryPayment.setOrderReference(orderFound);
-        temporaryPayment.setPaymentStatus(PaymentStatus.UNPAID);
+        temporaryPayment.setPaymentStatus(PaymentStatus.INITIAL);
         temporaryPayment.setCustomerUrl("https://maksmine.web.app/makse");
         temporaryPayment.setTimestamp(ZonedDateTime.now().toString());
 
