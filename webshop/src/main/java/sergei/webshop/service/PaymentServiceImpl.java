@@ -27,6 +27,9 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
     @Override
     public String payOrder(Long id) throws Exception {
 
@@ -35,7 +38,7 @@ public class PaymentServiceImpl implements PaymentService {
             throw new Exception("Order not found");
         }
 
-        RestTemplate restTemplate = new RestTemplate();
+//        RestTemplate restTemplate = new RestTemplate();
         String url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
 
         HttpHeaders headers = new HttpHeaders();

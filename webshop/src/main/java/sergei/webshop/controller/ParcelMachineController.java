@@ -25,7 +25,7 @@ public class ParcelMachineController {
         String finalCountry = country.toUpperCase();
 
         RestTemplate restTemplate = new RestTemplate(); // @Bean ja Autowire-dan
-        ResponseEntity<OmnivaPM[]> omnivaResponse = restTemplate.exchange("https://www.omniva.ee/locations.json",
+        ResponseEntity<OmnivaPM[]> omnivaResponse = restTemplate.exchange("https://www.omniva.ee/locations1.json",
                 HttpMethod.GET, null, OmnivaPM[].class);
 
         ParcelMachines parcelMachines = new ParcelMachines();
