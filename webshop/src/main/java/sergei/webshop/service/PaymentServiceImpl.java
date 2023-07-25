@@ -1,6 +1,7 @@
 package sergei.webshop.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,20 @@ public class PaymentServiceImpl implements PaymentService {
     @Autowired
     private PaymentRepository paymentRepository;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    @Value("${everypay.url}")
+    String url;
+
+    @Value("${everypay.token")
+    String token;
+
+    @Value("${everypay.customer-url}")
+    String customerUrl;
+
+    @Value("${everypay.username}")
+    String everyPayUsername;
+
+    @Value("${everypay.account-name}")
+    String everyPayAccountName;
 
     @Override
     public String payOrder(Long id) throws Exception {
@@ -38,11 +51,10 @@ public class PaymentServiceImpl implements PaymentService {
             throw new Exception("Order not found");
         }
 
-//        RestTemplate restTemplate = new RestTemplate();
-        String url = "https://igw-demo.every-pay.com/api/v4/payments/oneoff";
+        RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set(HttpHeaders.AUTHORIZATION, "Basic ZTM2ZWI0MGY1ZWM4N2ZhMjo3YjkxYTNiOWUxYjc0NTI0YzJlOWZjMjgyZjhhYzhjZA==");
+        headers.set(HttpHeaders.AUTHORIZATION, "Basic " + token);
         headers.set(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
 
 
@@ -50,14 +62,14 @@ public class PaymentServiceImpl implements PaymentService {
         temporaryPayment.setAmount(orderFound.getTotalSum());
         temporaryPayment.setOrderReference(orderFound);
         temporaryPayment.setPaymentStatus(PaymentStatus.INITIAL);
-        temporaryPayment.setCustomerUrl("https://maksmine.web.app/makse");
+        temporaryPayment.setCustomerUrl(customerUrl);
         temporaryPayment.setTimestamp(ZonedDateTime.now().toString());
 
         Payment savedPayment = paymentRepository.save(temporaryPayment);
 
         EverypayData body = new EverypayData();
-        body.setApi_username("e36eb40f5ec87fa2");
-        body.setAccount_name("EUR3D1");
+        body.setApi_username(everyPayUsername);
+        body.setAccount_name(everyPayAccountName);
         body.setAmount(savedPayment.getAmount());
         body.setOrder_reference(String.valueOf(orderFound.getId()));
         body.setNonce(String.valueOf(savedPayment.getNonce()));
