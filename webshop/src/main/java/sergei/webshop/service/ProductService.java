@@ -1,5 +1,7 @@
 package sergei.webshop.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import sergei.webshop.dto.ProductDTO;
 import sergei.webshop.entity.Product;
@@ -23,4 +25,6 @@ public interface ProductService {
     ResponseEntity<List<ProductDTO>> increaseStock(Long id) throws ExecutionException;
 
     ResponseEntity<List<ProductDTO>> decreaseStock(Long id) throws NotEnoughInStockException, ExecutionException;
+
+    ResponseEntity<Page<ProductDTO>> getAllProducts(Pageable pageable);
 }

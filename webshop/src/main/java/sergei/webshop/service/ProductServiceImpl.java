@@ -2,6 +2,8 @@ package sergei.webshop.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -54,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ResponseEntity<List<ProductDTO>> getAllProducts() {
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByOrderById();
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
@@ -64,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ResponseEntity<List<ProductDTO>> deleteProduct(Long id) {
         productRepository.deleteById(id);
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByOrderById();
         List<ProductDTO> productDTOs = products.stream()
                 .map(product -> modelMapper.map(product, ProductDTO.class))
                 .toList();
@@ -114,7 +116,7 @@ public class ProductServiceImpl implements ProductService {
         product.setStock(product.getStock() + 1);
         productRepository.save(product);
         productCache.refreshProduct(id, product); // Update cache to have the latest version of the product
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByOrderById();
 
         return new ResponseEntity<>(products.stream()
                 .map(product1 -> modelMapper.map(product1, ProductDTO.class))
@@ -131,10 +133,19 @@ public class ProductServiceImpl implements ProductService {
         product.setStock(product.getStock() - 1);
         productRepository.save(product);
         productCache.refreshProduct(id, product); // Update cache to have the latest version of the product
-        List<Product> products = productRepository.findAll();
+        List<Product> products = productRepository.findAllByOrderById();
 
         return new ResponseEntity<>(products.stream()
                 .map(product1 -> modelMapper.map(product1, ProductDTO.class))
                 .toList(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<Page<ProductDTO>> getAllProducts(Pageable pageable) {
+//        return productRepository.findAllByOrderById(pageable);
+
+        Page<Product> products = productRepository.findAllByOrderById(pageable);
+        Page<ProductDTO> productDTOs = products.map(product -> modelMapper.map(product, ProductDTO.class));
+        return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
 }
