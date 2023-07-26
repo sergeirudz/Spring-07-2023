@@ -34,4 +34,9 @@ public class OrderController {
     public ResponseEntity<String> createPayOrder(@RequestBody OrderDTO orderDTO) throws Exception {
         return orderService.createPayOrder(orderDTO);
     }
+
+    @GetMapping("check-payment/{paymentReference}")
+    public ResponseEntity<Boolean> checkPayment(@PathVariable String paymentReference) {
+        return paymentService.checkPayment(paymentReference);
+    }
 }

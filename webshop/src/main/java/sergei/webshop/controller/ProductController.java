@@ -36,7 +36,21 @@ public class ProductController {
     }
 
     @PutMapping("products/{id}")
-    public ResponseEntity<ProductDTO> getProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> editProduct(@PathVariable Long id, @RequestBody ProductDTO productDTO) {
         return productService.updateProduct(id, productDTO);
+    }
+
+    @PatchMapping("increase-stock/{id}")
+    public ResponseEntity<List<ProductDTO>> increaseStock(
+            @PathVariable Long id
+    ) {
+        return productService.increaseStock(id);
+    }
+
+    @PatchMapping("decrease-stock/{id}")
+    public ResponseEntity<List<ProductDTO>> decreaseStock(
+            @PathVariable Long id
+    ) {
+        return productService.decreaseStock(id);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import sergei.webshop.dto.ProductDTO;
 import sergei.webshop.entity.Category;
 import sergei.webshop.entity.Product;
+import sergei.webshop.exception.NotEnoughInStockException;
 import sergei.webshop.repository.CategoryRepository;
 import sergei.webshop.repository.ProductRepository;
 
@@ -98,5 +99,32 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(productToUpdate);
 
         return new ResponseEntity<>(modelMapper.map(productToUpdate, ProductDTO.class), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ProductDTO>> increaseStock(Long id) {
+        Product product = productRepository.findById(id).orElse(null);
+        product.setStock(product.getStock() + 1);
+        productRepository.save(product);
+        List<Product> products = productRepository.findAll();
+
+        return new ResponseEntity<>(products.stream()
+                .map(product1 -> modelMapper.map(product1, ProductDTO.class))
+                .toList(), HttpStatus.OK);
+    }
+
+    @Override
+    public ResponseEntity<List<ProductDTO>> decreaseStock(Long id) throws NotEnoughInStockException {
+        Product product = productRepository.findById(id).orElse(null);
+        if (product.getStock() == 0) {
+            throw new NotEnoughInStockException("Product is out of stock.");
+        }
+        product.setStock(product.getStock() - 1);
+        productRepository.save(product);
+        List<Product> products = productRepository.findAll();
+
+        return new ResponseEntity<>(products.stream()
+                .map(product1 -> modelMapper.map(product1, ProductDTO.class))
+                .toList(), HttpStatus.OK);
     }
 }
