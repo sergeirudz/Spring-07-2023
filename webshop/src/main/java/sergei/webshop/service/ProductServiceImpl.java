@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import sergei.webshop.cache.ProductCache;
 import sergei.webshop.dto.ProductDTO;
 import sergei.webshop.entity.Category;
 import sergei.webshop.entity.Product;
@@ -13,6 +14,7 @@ import sergei.webshop.repository.CategoryRepository;
 import sergei.webshop.repository.ProductRepository;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -25,6 +27,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ModelMapper modelMapper;
+
+    @Autowired
+    ProductCache productCache;
 
     @Override
     public ResponseEntity<ProductDTO> addProduct(Product productDTO) {
@@ -67,16 +72,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<ProductDTO> getProduct(Long id) {
-        Product product = productRepository.findById(id).get();
+    public ResponseEntity<ProductDTO> getProduct(Long id) throws ExecutionException {
+//        Product product = productRepository.findById(id).get();
+        Product product = productCache.getProduct(id);
         ProductDTO productDTO = modelMapper.map(product, ProductDTO.class);
         return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ProductDTO> updateProduct(Long id, ProductDTO productDTO) {
-        Product productToUpdate = productRepository.findById(id).orElse(null);
-
+    public ResponseEntity<ProductDTO> updateProduct(Long id, ProductDTO productDTO) throws ExecutionException {
+//        Product productToUpdate = productRepository.findById(id).orElse(null);
+        Product productToUpdate = productCache.getProduct(id);
         if (productToUpdate == null) {
             throw new IllegalArgumentException("Product with the given id does not exist.");
         }
@@ -102,10 +108,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<List<ProductDTO>> increaseStock(Long id) {
-        Product product = productRepository.findById(id).orElse(null);
+    public ResponseEntity<List<ProductDTO>> increaseStock(Long id) throws ExecutionException {
+//        Product product = productRepository.findById(id).orElse(null); // Replace with cache
+        Product product = productCache.getProduct(id);
         product.setStock(product.getStock() + 1);
         productRepository.save(product);
+        productCache.refreshProduct(id, product); // Update cache to have the latest version of the product
         List<Product> products = productRepository.findAll();
 
         return new ResponseEntity<>(products.stream()
@@ -114,13 +122,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ResponseEntity<List<ProductDTO>> decreaseStock(Long id) throws NotEnoughInStockException {
-        Product product = productRepository.findById(id).orElse(null);
+    public ResponseEntity<List<ProductDTO>> decreaseStock(Long id) throws NotEnoughInStockException, ExecutionException {
+//        Product product = productRepository.findById(id).orElse(null); // Replace with cache
+        Product product = productCache.getProduct(id);
         if (product.getStock() == 0) {
             throw new NotEnoughInStockException("Product is out of stock.");
         }
         product.setStock(product.getStock() - 1);
         productRepository.save(product);
+        productCache.refreshProduct(id, product); // Update cache to have the latest version of the product
         List<Product> products = productRepository.findAll();
 
         return new ResponseEntity<>(products.stream()

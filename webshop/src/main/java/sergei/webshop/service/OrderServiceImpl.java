@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import sergei.webshop.cache.ProductCache;
 import sergei.webshop.dto.OrderDTO;
 import sergei.webshop.dto.OrderRowsDTO;
 import sergei.webshop.dto.everypay.EverypayData;
@@ -20,6 +21,7 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -38,6 +40,9 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private OrderRowRepository orderRowRepository;
+
+    @Autowired
+    ProductCache productCache;
 
     @Override
     public ResponseEntity<OrderDTO> getAllOrders() {
@@ -123,15 +128,25 @@ public class OrderServiceImpl implements OrderService {
         double totalSum = 0;
 
         for (OrderRowsDTO order : orderRows) {
-            Product product = productRepository.findById(order.getProduct().getId()).orElse(null);
-            if (product == null) {
-                throw new IllegalArgumentException("Product with the given id does not exist.");
-            }
-            double subtotal = product.getPrice() * order.getQuantity();
+            double subtotal = getSubtotalAndUpdateProduct(order);
             totalSum += subtotal;
         }
 
         return totalSum;
+    }
+
+    private double getSubtotalAndUpdateProduct(OrderRowsDTO order) throws ExecutionException {
+        // Product product = productRepository.findById(order.getProduct().getId()).orElse(null);
+        Product product = productCache.getProduct(order.getProduct().getId());
+        if (product == null) {
+            throw new IllegalArgumentException("Product with the given id does not exist.");
+        }
+
+        product.setStock(product.getStock() - order.getQuantity());
+        productRepository.save(product);
+        productCache.refreshProduct(product.getId(), product);
+        double subtotal = product.getPrice() * order.getQuantity();
+        return subtotal;
     }
 
 

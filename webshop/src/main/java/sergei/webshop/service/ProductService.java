@@ -6,6 +6,7 @@ import sergei.webshop.entity.Product;
 import sergei.webshop.exception.NotEnoughInStockException;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public interface ProductService {
 
@@ -15,11 +16,11 @@ public interface ProductService {
 
     ResponseEntity<List<ProductDTO>> deleteProduct(Long id);
 
-    ResponseEntity<ProductDTO> getProduct(Long id);
+    ResponseEntity<ProductDTO> getProduct(Long id) throws ExecutionException;
 
-    ResponseEntity<ProductDTO> updateProduct(Long id, ProductDTO productDTO);
+    ResponseEntity<ProductDTO> updateProduct(Long id, ProductDTO productDTO) throws ExecutionException;
 
-    ResponseEntity<List<ProductDTO>> increaseStock(Long id);
+    ResponseEntity<List<ProductDTO>> increaseStock(Long id) throws ExecutionException;
 
-    ResponseEntity<List<ProductDTO>> decreaseStock(Long id) throws NotEnoughInStockException;
+    ResponseEntity<List<ProductDTO>> decreaseStock(Long id) throws NotEnoughInStockException, ExecutionException;
 }
