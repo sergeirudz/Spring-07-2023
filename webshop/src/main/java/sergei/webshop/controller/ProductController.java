@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import sergei.webshop.dto.ProductDTO;
 import sergei.webshop.entity.Product;
 import org.springframework.web.bind.annotation.*;
+import sergei.webshop.exception.NotEnoughInStockException;
 import sergei.webshop.service.ProductService;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class ProductController {
     @PatchMapping("decrease-stock/{id}")
     public ResponseEntity<List<ProductDTO>> decreaseStock(
             @PathVariable Long id
-    ) {
+    ) throws NotEnoughInStockException {
         return productService.decreaseStock(id);
     }
 }
