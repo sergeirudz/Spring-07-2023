@@ -5,8 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { EditProductComponent } from './pages/admin/edit-product/edit-product.component';
-import { MaintainProductsComponent } from './pages/admin/maintain-products/maintain-products.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -28,17 +26,19 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CardComponent } from './components/card/card.component';
 import { FormsModule } from '@angular/forms';
+import { EditProductsComponent } from './pages/admin/edit-products/edit-products.component';
+import { EditProductModalComponent } from './components/edit-product-modal/edit-product-modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomepageComponent,
     CartComponent,
-    EditProductComponent,
-    MaintainProductsComponent,
     NavbarComponent,
     FooterComponent,
     CardComponent,
+    EditProductsComponent,
+    EditProductModalComponent,
   ],
   imports: [
     BrowserModule,

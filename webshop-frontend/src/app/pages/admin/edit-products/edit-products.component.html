@@ -35,7 +35,9 @@
         <td class="text-center">Laptop</td>
         <td class="text-center">1</td>
         <td class="text-center">
-          <button type="button" class="btn btn-link btn-sm btn-rounded">
+          <button type="button" class="btn btn-link btn-sm btn-rounded" data-mdb-toggle="modal"
+                  data-mdb-target="#exampleModal"
+                  (click)="openModal()">
             Edit
           </button>
         </td>
@@ -43,3 +45,4 @@
     </tbody>
   </table>
 </div>
+<!-- <button class="btn btn-primary" (click)="openModal()">Open modal</button> -->
