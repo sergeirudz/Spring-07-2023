@@ -1,1 +1,45 @@
-<p>maintain-products works!</p>
+<!-- https://mdbootstrap.com/docs/standard/data/tables/ -->
+<div class="d-flex align-items-baseline mt-5 flex-grow-1">
+  <table class="table align-middle mb-0 bg-white" style="min-width: 100%">
+    <thead class="bg-light text-center">
+      <tr>
+        <th>Info</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Category</th>
+        <th>In Stock</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <div class="d-flex align-items-center">
+            <img
+                 src="https://placehold.co/100"
+                 alt=""
+                 style="width: 100px; height: 100px" />
+            <div class="ms-3">
+              <p class="fw-bold mb-1">Product Name Here</p>
+              <p class="text-muted mb-0">
+                Description </p>
+            </div>
+          </div>
+        </td>
+        <td class="text-center">
+          <p class="text-muted mb-0">$5</p>
+        </td>
+        <td class="text-center">
+          <span class="badge badge-success rounded-pill d-inline">Active</span>
+        </td>
+        <td class="text-center">Laptop</td>
+        <td class="text-center">1</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-link btn-sm btn-rounded">
+            Edit
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
