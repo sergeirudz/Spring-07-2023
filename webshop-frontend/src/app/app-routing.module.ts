@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomepageComponent } from './pages/homepage/homepage.component';
 import { CartComponent } from './pages/cart/cart.component';
-import { AddProductComponent } from './pages/admin/add-product/add-product.component';
 import { EditProductComponent } from './pages/admin/edit-product/edit-product.component';
 import { MaintainProductsComponent } from './pages/admin/maintain-products/maintain-products.component';
+import { AddProductComponent } from './pages/admin/add-product/add-product.component';
 
 const routes: Routes = [
   { path: '', component: HomepageComponent },
