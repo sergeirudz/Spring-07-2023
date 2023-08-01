@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Product } from '../../models/product.model';
 
 @Component({
   selector: 'app-homepage',
@@ -7,19 +8,19 @@ import { Component } from '@angular/core';
   styleUrls: ['./homepage.component.scss'],
 })
 export class HomepageComponent {
-  products = ['Külmkapp', 'Pesumasin'];
+  products: Product[] = [];
 
   constructor(private httpClient: HttpClient) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.httpClient
-      .get<any[]>('http://localhost:8080/products')
+      .get<Product[]>('http://localhost:8080/products')
       .subscribe((data) => {
-        this.products = data.map((product) => product.name);
+        this.products = data;
       });
   }
 
-  addToCart(product: string) {
+  addToCart(product: Product) {
     this.products = [...this.products, product];
   }
 }

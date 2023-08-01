@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomepageComponent } from './homepage/homepage.component';
-import { CartComponent } from './cart/cart.component';
-import { AddProductComponent } from './admin/add-product/add-product.component';
-import { EditProductComponent } from './admin/edit-product/edit-product.component';
-import { MaintainProductsComponent } from './admin/maintain-products/maintain-products.component';
+import { HomepageComponent } from './pages/homepage/homepage.component';
+import { CartComponent } from './pages/cart/cart.component';
+import { AddProductComponent } from './pages/admin/add-product/add-product.component';
+import { EditProductComponent } from './pages/admin/edit-product/edit-product.component';
+import { MaintainProductsComponent } from './pages/admin/maintain-products/maintain-products.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -25,6 +25,9 @@ import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { HttpClientModule } from '@angular/common/http';
     AddProductComponent,
     EditProductComponent,
     MaintainProductsComponent,
+    NavbarComponent,
+    FooterComponent,
+    CardComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,6 @@
+// @use "./styles/index.scss" as *;
+@use "./styles/variables" as *;
+
+.main-height {
+  min-height: calc(99vh - $navBarHeight - $footerHeight);
+}
