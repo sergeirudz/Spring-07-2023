@@ -1,4 +1,4 @@
-<form>
+<form (ngSubmit)="updateProduct()">
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Edit Product Name</h5>
     <button
@@ -8,31 +8,30 @@
             (click)="modalRef.close()"></button>
   </div>
   <div class="modal-body">
-
-
     <div class="form-outline mb-4 bg-light">
-      <input type="text" id="name" class="form-control" />
+      <input type="text" id="name" class="form-control" [(ngModel)]="updatedProduct.name" name="name"
+             value="{{product.name}}" />
       <label class="form-label" for="name">Name</label>
     </div>
 
 
     <div class="form-outline mb-4 bg-light">
-      <input type="text" id="description" class="form-control" />
+      <input type="text" id="description" class="form-control" [(ngModel)]="product.description" name="description" />
       <label class="form-label" for="description">Description</label>
     </div>
 
     <div class="form-outline mb-4 bg-light">
-      <input type="text" id="image" class="form-control" />
+      <input type="text" id="image" class="form-control" [ngModel]="product.image" name="image" />
       <label class="form-label" for="image">Image URL</label>
     </div>
 
     <div class="form-outline mb-4 bg-light">
-      <input type="text" id="price" class="form-control" />
+      <input type="text" id="price" class="form-control" [ngModel]="product.price" name="price" />
       <label class="form-label" for="price">Price</label>
     </div>
 
     <div class="input-group mb-3 bg-light">
-      <select class="w-100 bg-light" id="category">
+      <select class="w-100 bg-light" id="category" name="category">
         <option selected>Change Category</option>
         <option value="1">One</option>
         <option value="2">Two</option>
@@ -41,12 +40,12 @@
     </div>
 
     <div class="form-outline mb-4 bg-light">
-      <input type="number" id="price" class="form-control" />
+      <input type="number" id="price" class="form-control" [ngModel]="product.stock" name="stock" />
       <label class="form-label" for="price">Nr. in Stock</label>
     </div>
 
     <div class="form-check d-flex justify-content-start mb-4">
-      <input class="form-check-input me-2" type="checkbox" value="" id="form4Example4" checked />
+      <input class="form-check-input me-2" type="checkbox" value="" id="form4Example4" checked name="active" />
       <label class="form-check-label" for="form4Example4">
         Product is active
       </label>
@@ -56,6 +55,6 @@
     <button type="button" class="btn btn-secondary" (click)="modalRef.close()">
       Cancel
     </button>
-    <button type="button" class="btn btn-primary">Update product</button>
+    <button type="button" class="btn btn-primary" type="submit">Update product</button>
   </div>
 </form>
