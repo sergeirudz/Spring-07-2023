@@ -27,10 +27,17 @@ public class AppConfig {
             @Override
             public void addCorsMappings(
                     CorsRegistry registry) {
+//                WebMvcConfigurer.super.addCorsMappings(registry);// DEFAULT
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
                         .allowedHeaders("*");
+//                        .allowCredentials(true);
+
+//                registry.addMapping("/admin/**")
+//                        .allowedOrigins("http://localhost:4300")
+//                        .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
+//                        .allowedHeaders("*");
 //                        .allowCredentials(true);
             }
         };
