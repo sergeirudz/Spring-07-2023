@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MdbModalRef } from 'mdb-angular-ui-kit/modal';
+import { Category } from 'src/app/models/category.model';
 import { Product } from 'src/app/models/product.model';
+import { CategoryService } from 'src/app/services/category.service';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-edit-product-modal',
@@ -9,17 +13,36 @@ import { Product } from 'src/app/models/product.model';
   styleUrls: ['./edit-product-modal.component.scss'],
 })
 export class EditProductModalComponent {
+  @Input() product!: Product;
+  updatedProduct: Product = {} as Product;
+  categories: Category[] = [];
+  editProductForm!: FormGroup;
+
   constructor(
-    private httpClient: HttpClient,
+    private productService: ProductService,
+    private categoryService: CategoryService,
     public modalRef: MdbModalRef<EditProductModalComponent>
   ) {}
-
-  @Input() product: Product = {} as Product;
-  updatedProduct: Product = {} as Product;
 
   ngOnInit() {
     // Instead of a deep copy, set updatedProduct directly to the product object
     this.updatedProduct = this.product;
+    this.categoryService.getCategories().subscribe((data) => {
+      this.categories = data;
+    });
+    console.log(this.product);
+
+    this.productService.getProduct(this.product).subscribe((data) => {
+      this.editProductForm = new FormGroup({
+        name: new FormControl(this.product.name),
+        description: new FormControl(this.product.description),
+        price: new FormControl(this.product.price),
+        stock: new FormControl(this.product.stock),
+        image: new FormControl(this.product.image),
+        active: new FormControl(this.product.active),
+        category: new FormControl(this.product.category),
+      });
+    });
   }
   ngOnDestroy() {
     // Perform cleanup tasks if necessary
@@ -27,21 +50,9 @@ export class EditProductModalComponent {
 
   updateProduct() {
     console.log('Product updated!', this.updatedProduct);
-    // Assuming you have an API endpoint to update the product, make an HTTP call here
-    // Replace 'http://localhost:8080/update-product' with your actual API endpoint
-    // this.httpClient
-    //   .put('http://localhost:8080/update-product', this.updatedProduct)
-    //   .subscribe(
-    //     (response) => {
-    //       // Handle the success response if needed
-    //       console.log('Product updated successfully!');
-    //       // You can close the modal after successful update
-    //       this.modalRef.close();
-    //     },
-    //     (error) => {
-    //       // Handle the error response if needed
-    //       console.error('Error updating product:', error);
-    //     }
-    //   );
+
+    this.productService
+      .editProduct(this.updatedProduct)
+      .subscribe((response) => {});
   }
 }

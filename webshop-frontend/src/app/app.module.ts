@@ -1,10 +1,19 @@
+// TODO better imports
+/*
+1. Angular Imports
+2. Other Imports
+3. Personal Imports
+*/
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomepageComponent } from './pages/homepage/homepage.component';
-import { CartComponent } from './pages/cart/cart.component';
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
@@ -21,13 +30,15 @@ import { MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
 import { MdbTooltipModule } from 'mdb-angular-ui-kit/tooltip';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+
+import { CartComponent } from './pages/cart/cart.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CardComponent } from './components/card/card.component';
-import { FormsModule } from '@angular/forms';
 import { EditProductsComponent } from './pages/admin/edit-products/edit-products.component';
 import { EditProductModalComponent } from './components/edit-product-modal/edit-product-modal.component';
+import { CommonModule } from '@angular/common';
+import { AddProductComponent } from './pages/admin/add-product/add-product.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +50,7 @@ import { EditProductModalComponent } from './components/edit-product-modal/edit-
     CardComponent,
     EditProductsComponent,
     EditProductModalComponent,
+    AddProductComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +72,8 @@ import { EditProductModalComponent } from './components/edit-product-modal/edit-
     MdbValidationModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    CommonModule,
+    ReactiveFormsModule,
     FormsModule,
   ],
   providers: [],
