@@ -1,6 +1,6 @@
 <template lang="">
-  <NuxtLayout name="default">
-    <div>Register page</div>
+  <NuxtLayout name="auth">
+    <RegisterForm />
   </NuxtLayout>
 </template>
 <script>

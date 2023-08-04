@@ -1,6 +1,6 @@
 <template lang="">
-  <NuxtLayout name="default">
-    <div>forgot password page</div>
+  <NuxtLayout name="auth">
+    <ForgotPasswordForm />
   </NuxtLayout>
 </template>
 <script>
