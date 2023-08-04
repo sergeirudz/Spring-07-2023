@@ -1,7 +1,7 @@
 <template>
   <div>
     <NuxtLayout name="custom">
-      <div class="container">ALL PRODUCTS HERE</div>
+      <h1 class="text-xl">Products List Page</h1>
     </NuxtLayout>
   </div>
 </template>

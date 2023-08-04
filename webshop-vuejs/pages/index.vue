@@ -17,12 +17,9 @@ useHead({
 </script>
 
 <template>
-  <div class="">
-    <div class="">
-      <h1 class="text-xl">Webshop</h1>
-      <NuxtLink to="/products">View Products</NuxtLink>
-    </div>
-  </div>
+  <NuxtLayout name="custom">
+    <h1 class="text-xl">Webshop Home Page</h1>
+  </NuxtLayout>
 </template>
 
 <style scoped></style>
