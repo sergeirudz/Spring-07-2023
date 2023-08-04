@@ -17,17 +17,12 @@ useHead({
 </script>
 
 <template>
-  <div>
-    <div class="container">
-      <h1>Webshop</h1>
+  <div class="">
+    <div class="">
+      <h1 class="text-xl">Webshop</h1>
       <NuxtLink to="/products">View Products</NuxtLink>
     </div>
   </div>
 </template>
 
-<style scoped>
-.container {
-  text-align: center;
-  margin-top: 5rem;
-}
-</style>
+<style scoped></style>
