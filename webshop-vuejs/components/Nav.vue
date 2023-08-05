@@ -1,5 +1,15 @@
 <script setup lang="ts">
 const { isDarkMode, toggleDarkMode } = useDarkMode();
+
+const isMenuOpen = ref(false);
+const isMobileMenuOpen = ref(false);
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+};
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value;
+};
 </script>
 
 <template>
@@ -31,12 +41,13 @@ const { isDarkMode, toggleDarkMode } = useDarkMode();
               </div>
             </div>
           </div>
-          <div class="block">
+          <div class="hidden md:block">
             <div class="flex items-center ml-4 md:ml-6">
               <div class="relative ml-3">
                 <div class="relative inline-block text-left">
                   <div>
                     <button
+                      @click="toggleMenu"
                       type="button"
                       class="flex items-center justify-center w-full rounded-md px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
                       id="options-menu"
@@ -56,6 +67,8 @@ const { isDarkMode, toggleDarkMode } = useDarkMode();
                     </button>
                   </div>
                   <div
+                    v-if="isMenuOpen"
+                    id="profile-menu"
                     class="absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5"
                   >
                     <div
@@ -64,6 +77,35 @@ const { isDarkMode, toggleDarkMode } = useDarkMode();
                       aria-orientation="vertical"
                       aria-labelledby="options-menu"
                     >
+                      <span
+                        class="cursor-pointer block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                        role="menuitem"
+                      >
+                        <span class="flex flex-col">
+                          <div class="">
+                            <div
+                              class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
+                            >
+                              <input
+                                v-model="isDarkMode"
+                                @click="toggleDarkMode()"
+                                id="toggleDarkMode"
+                                type="checkbox"
+                                name="toggle"
+                                class="checked:bg-black outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                              />
+                              <label
+                                for="toggleDarkMode"
+                                class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+                              >
+                              </label>
+                            </div>
+                            <span class="font-medium text-gray-400">
+                              Black
+                            </span>
+                          </div>
+                        </span>
+                      </span>
                       <NuxtLink
                         to="/profile"
                         class="block block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
@@ -89,6 +131,7 @@ const { isDarkMode, toggleDarkMode } = useDarkMode();
           </div>
           <div class="flex -mr-2 md:hidden">
             <button
+              @click="toggleMobileMenu"
               class="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none"
             >
               <svg
@@ -107,32 +150,71 @@ const { isDarkMode, toggleDarkMode } = useDarkMode();
           </div>
         </div>
       </div>
-      <div class="md:hidden">
+      <div v-if="isMobileMenuOpen" class="md:hidden flex justify-between w-100">
         <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          <a
+          <NuxtLink
             class="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            to="/#"
+            to="/"
+            role="menuitem"
           >
             Home
-          </a>
-          <a
+          </NuxtLink>
+          <NuxtLink
             class="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium"
-            to="/#"
+            to="/products"
+            role="menuitem"
           >
-            Gallery
-          </a>
-          <a
+            Products
+          </NuxtLink>
+          <NuxtLink
             class="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            to="/#"
+            to="/cart"
+            role="menuitem"
           >
-            Content
-          </a>
-          <a
+            Cart
+          </NuxtLink>
+        </div>
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <span
             class="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-            to="/#"
+            role="menuitem"
           >
-            Contact
-          </a>
+            <span class="flex flex-col">
+              <div class="">
+                <div
+                  class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
+                >
+                  <input
+                    v-model="isDarkMode"
+                    @click="toggleDarkMode()"
+                    id="toggleDarkMode"
+                    type="checkbox"
+                    name="toggle"
+                    class="checked:bg-black outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                  />
+                  <label
+                    for="toggleDarkMode"
+                    class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+                  >
+                  </label>
+                </div>
+                <span class="font-medium text-gray-400"> Black </span>
+              </div>
+            </span>
+          </span>
+          <NuxtLink
+            class="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium"
+            to="/profile"
+            role="menuitem"
+          >
+            Profile
+          </NuxtLink>
+          <span
+            class="cursor-pointer text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+            role="menuitem"
+          >
+            Logout
+          </span>
         </div>
       </div>
     </nav>
