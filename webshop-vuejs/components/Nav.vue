@@ -1,5 +1,38 @@
 <script setup lang="ts">
-const { isDarkMode, toggleDarkMode } = useDarkMode();
+let darkMode = useCookie<boolean>('darkMode');
+const { isDarkMode, setDarkMode } = useDarkMode();
+const checked = ref(isDarkMode);
+
+onBeforeMount(() => {
+  if (darkMode.value !== true && darkMode.value !== false) {
+    darkMode.value = false;
+    setDarkMode(darkMode.value);
+  }
+  checked.value = darkMode.value;
+});
+
+// TODO: fix blinking
+const handleDarkMode = () => {
+  switch (checked.value) {
+    case true:
+      console.log('toFalse');
+      setDarkMode(false);
+      darkMode.value = false;
+      checked.value = false;
+      break;
+    case false:
+      console.log('toTrue');
+      setDarkMode(true);
+      darkMode.value = true;
+      checked.value = true;
+      break;
+    default:
+      setDarkMode(false);
+      darkMode.value = false;
+      checked.value = false;
+      break;
+  }
+};
 
 const isMenuOpen = ref(false);
 const isMobileMenuOpen = ref(false);
@@ -87,8 +120,9 @@ const toggleMobileMenu = () => {
                               class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
                             >
                               <input
-                                v-model="isDarkMode"
-                                @click="toggleDarkMode()"
+                                v-model="checked"
+                                :checked="checked"
+                                @click="handleDarkMode"
                                 id="toggleDarkMode"
                                 type="checkbox"
                                 name="toggle"
@@ -101,7 +135,7 @@ const toggleMobileMenu = () => {
                               </label>
                             </div>
                             <span class="font-medium text-gray-400">
-                              Black
+                              Dark Mode {{ checked ? 'On' : 'Off' }}
                             </span>
                           </div>
                         </span>
@@ -185,8 +219,9 @@ const toggleMobileMenu = () => {
                   class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
                 >
                   <input
-                    v-model="isDarkMode"
-                    @click="toggleDarkMode()"
+                    v-model="checked"
+                    :checked="checked"
+                    @click="handleDarkMode"
                     id="toggleDarkMode"
                     type="checkbox"
                     name="toggle"
@@ -198,7 +233,9 @@ const toggleMobileMenu = () => {
                   >
                   </label>
                 </div>
-                <span class="font-medium text-gray-400"> Black </span>
+                <span class="font-medium text-gray-400">
+                  Dark Mode {{ checked ? 'On' : 'Off' }}
+                </span>
               </div>
             </span>
           </span>

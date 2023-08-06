@@ -1,13 +1,13 @@
 const useDarkMode = () => {
-  const isDarkMode = useState('darkMode', () => false);
+  const isDarkMode = useState<boolean>('darkMode', () => false);
 
-  const toggleDarkMode = () => {
-    isDarkMode.value = !isDarkMode.value;
+  const setDarkMode = (value: boolean) => {
+    isDarkMode.value = value;
   };
 
   return {
     isDarkMode,
-    toggleDarkMode,
+    setDarkMode,
   };
 };
 
