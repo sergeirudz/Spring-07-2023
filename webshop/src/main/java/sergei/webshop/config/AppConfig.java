@@ -21,6 +21,30 @@ public class AppConfig {
     }
 
     //    @CrossOrigin(origins = "http://localhost:4200")
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+//                WebMvcConfigurer.super.addCorsMappings(registry); DEFAULT
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200")
+                        .allowedMethods("GET", "POST", "DELETE", "PUT", "PATCH")
+                        .allowedHeaders("*");
+//                registry.addMapping("/admin/**")
+//                        .allowedOrigins("http://localhost:3000")
+//                        .allowedMethods("GET")
+//                        .allowedHeaders("*");
+            }
+        };
+    }
+
+
+}
+
+/*
+
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
@@ -29,7 +53,7 @@ public class AppConfig {
                     CorsRegistry registry) {
 //                WebMvcConfigurer.super.addCorsMappings(registry);// DEFAULT
                 registry.addMapping("/**")
-                        .allowedOrigins("*") // "http://localhost:4200", "http://localhost:3000"
+                        .allowedOrigins("http://localhost:4200", "http://localhost:3000") // "http://localhost:4200", "http://localhost:3000"
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
                         .allowedHeaders("*");
 //                        .allowCredentials(true);
@@ -42,4 +66,4 @@ public class AppConfig {
             }
         };
     }
-}
+* */
