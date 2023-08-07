@@ -1,22 +1,34 @@
 import { Component } from '@angular/core';
 import { CartProduct } from '../models/cart-product.model';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.scss']
+  styleUrls: ['./cart.component.scss'],
 })
 export class CartComponent {
   cartProducts: CartProduct[] = [];
-  parcelmachines: any[] = [];
+  omnivaPMs: any[] = [];
+  smartPostPMs: any[] = [];
   sumOfCart = 0;
 
+  constructor(private cartService: CartService) {}
+
   ngOnInit(): void {
-    const cartItemsSS = sessionStorage.getItem("cartItems");
+    const cartItemsSS = sessionStorage.getItem('cartItems');
     if (cartItemsSS) {
-      this.cartProducts = JSON.parse(cartItemsSS); 
+      this.cartProducts = JSON.parse(cartItemsSS);
     }
     this.calculateSumOfCart();
+    this.onChangeParcelMachine('ee');
+  }
+
+  onChangeParcelMachine(country: string) {
+    this.cartService.getParcelMachines().subscribe((res) => {
+      this.omnivaPMs = res.omivaPMs;
+      this.smartPostPMs = res.smartPostPMs;
+    });
   }
 
   onDecreaseQuantity(cartProduct: CartProduct) {
@@ -24,39 +36,44 @@ export class CartComponent {
     if (cartProduct.quantity <= 0) {
       this.onRemoveProduct(cartProduct);
     }
-    sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
+    sessionStorage.setItem('cartItems', JSON.stringify(this.cartProducts));
     this.calculateSumOfCart();
   }
 
   onIncreaseQuantity(cartProduct: CartProduct) {
     cartProduct.quantity++;
-    sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
+    sessionStorage.setItem('cartItems', JSON.stringify(this.cartProducts));
     this.calculateSumOfCart();
   }
 
   onRemoveProduct(cartProduct: CartProduct) {
-    const index = this.cartProducts.findIndex(element => element.product.id === cartProduct.product.id);
+    const index = this.cartProducts.findIndex(
+      (element) => element.product.id === cartProduct.product.id
+    );
     if (index >= 0) {
-      this.cartProducts.splice(index,1);
-      sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
+      this.cartProducts.splice(index, 1);
+      sessionStorage.setItem('cartItems', JSON.stringify(this.cartProducts));
     }
     this.calculateSumOfCart();
   }
 
   onEmptyCart() {
     this.cartProducts = [];
-    sessionStorage.setItem("cartItems", JSON.stringify(this.cartProducts));
+    sessionStorage.setItem('cartItems', JSON.stringify(this.cartProducts));
     this.calculateSumOfCart();
   }
 
   calculateSumOfCart() {
     this.sumOfCart = 0;
-    this.cartProducts.forEach(element => this.sumOfCart += element.product.price * element.quantity);
+    this.cartProducts.forEach(
+      (element) => (this.sumOfCart += element.product.price * element.quantity)
+    );
   }
 
   onPay() {
-    // this.paymentService.getPaymentLink(this.cartProducts).subscribe(res => {
-    //   window.location.href = res.payment_link;
-    // });
+    this.cartService.getPaymentLink(this.cartProducts).subscribe((res) => {
+      console.log(res);
+      window.location.href = res;
+    });
   }
 }
