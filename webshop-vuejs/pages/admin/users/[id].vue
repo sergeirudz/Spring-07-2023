@@ -1,13 +1,14 @@
 <template lang="">
-  <NuxtLayout name="default">
-    <div>Edit one user page - {{ name }}</div>
-  </NuxtLayout>
+    <NuxtLayout name="default">
+        <div>Edit one user page - {{ name }}</div>
+    </NuxtLayout>
 </template>
-<script>
-// import {} from "#app";
+
+<script setup lang="ts">
 const route = useRoute();
 const name = route.params.name;
-
-export default {};
+definePageMeta({
+    middleware: ["admin-only"],
+});
 </script>
 <style lang=""></style>
