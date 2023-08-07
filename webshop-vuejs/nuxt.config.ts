@@ -2,12 +2,20 @@ import { fileURLToPath } from 'url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  pinia: {
+    autoImports: [
+      // automatically imports `defineStore`
+      'defineStore', // import { defineStore } from 'pinia'
+      // ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
+    ],
+  },
   devtools: { enabled: true },
   alias: {
     components: fileURLToPath(new URL('./components', import.meta.url)),
     layouts: fileURLToPath(new URL('./layouts', import.meta.url)),
     pages: fileURLToPath(new URL('./pages', import.meta.url)),
+    types: fileURLToPath(new URL('./types', import.meta.url)),
   },
   // srcDir: 'src',
   css: ['~/assets/css/tailwind.css'],
@@ -20,6 +28,13 @@ export default defineNuxtConfig({
           autoprefixer: {},
         },
       },
+    },
+  },
+  runtimeConfig: {
+    BACKEND_URL: process.env.BACKEND_URL,
+    apiSecret: '123',
+    public: {
+      BACKEND_URL: process.env.BACKEND_URL,
     },
   },
 });
