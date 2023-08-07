@@ -9,6 +9,5 @@
   </div>
 </div>
 
-<!-- 
-  for(Product item: list)
- -->
+
+<button *ngFor="let page of pages" (click)="onChangePage(page)" [class.active]="activePage === page">{{page}}</button>
