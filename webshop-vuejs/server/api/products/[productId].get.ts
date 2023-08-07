@@ -15,7 +15,6 @@ export default defineEventHandler(async (event) => {
         method: 'GET',
       })
     );
-    console.log('payload', payload);
     sendJSON(payload.json, res);
   } catch (error: any) {
     return getErrorResponse(error);

@@ -1,4 +1,4 @@
-<template lang="">
+<template>
   <NuxtLayout name="auth">
     <RegisterForm />
   </NuxtLayout>

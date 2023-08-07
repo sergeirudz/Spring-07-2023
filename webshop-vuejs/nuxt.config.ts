@@ -2,7 +2,7 @@ import { fileURLToPath } from 'url';
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', '@vueuse/nuxt'],
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
@@ -17,6 +17,7 @@ export default defineNuxtConfig({
     pages: fileURLToPath(new URL('./pages', import.meta.url)),
     types: fileURLToPath(new URL('./types', import.meta.url)),
     utils: fileURLToPath(new URL('./utils', import.meta.url)),
+    store: fileURLToPath(new URL('./store', import.meta.url)),
   },
   // srcDir: 'src',
   css: ['~/assets/css/tailwind.css'],

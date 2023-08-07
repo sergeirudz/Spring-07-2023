@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import { useUserStore } from 'store/store.account';
+
+const userStore = useUserStore();
+// refactor to useLocalStorage https://vueuse.org/guide/
 let darkMode = useCookie<boolean>('darkMode');
 const { isDarkMode, setDarkMode } = useDarkMode();
 const checked = ref(isDarkMode);
@@ -43,6 +47,17 @@ const toggleMenu = () => {
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value;
 };
+
+const loggedInText = computed(() => {
+  switch (userStore.isLoggedIn) {
+    case true:
+      return `Signed In as ${userStore.email}`;
+    case false:
+      return 'Signed Out';
+    default:
+      return 'Signed Out';
+  }
+});
 </script>
 
 <template>
@@ -71,6 +86,23 @@ const toggleMobileMenu = () => {
                 >
                   Cart
                 </NuxtLink>
+                <NuxtLink
+                  class="text-gray-300 hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  to="/login"
+                >
+                  Login
+                </NuxtLink>
+                <NuxtLink
+                  class="text-gray-300 hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  to="/register"
+                >
+                  Register
+                </NuxtLink>
+                <div
+                  class="pl-10 text-gray-300 flex justify-center align-middle text-center"
+                >
+                  <h3>{{ loggedInText }}</h3>
+                </div>
               </div>
             </div>
           </div>
@@ -115,29 +147,31 @@ const toggleMobileMenu = () => {
                         role="menuitem"
                       >
                         <span class="flex flex-col">
-                          <div class="">
-                            <div
-                              class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
-                            >
-                              <input
-                                v-model="checked"
-                                :checked="checked"
-                                @click="handleDarkMode"
-                                id="toggleDarkMode"
-                                type="checkbox"
-                                name="toggle"
-                                class="checked:bg-black outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                              />
-                              <label
-                                for="toggleDarkMode"
-                                class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+                          <ClientOnly>
+                            <div class="">
+                              <div
+                                class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
                               >
-                              </label>
+                                <input
+                                  v-model="checked"
+                                  :checked="checked"
+                                  @click="handleDarkMode"
+                                  id="toggleDarkMode"
+                                  type="checkbox"
+                                  name="toggle"
+                                  class="checked:bg-black outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                                />
+                                <label
+                                  for="toggleDarkMode"
+                                  class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+                                >
+                                </label>
+                              </div>
+                              <span class="font-medium text-gray-400">
+                                Dark Mode {{ checked ? 'On' : 'Off' }}
+                              </span>
                             </div>
-                            <span class="font-medium text-gray-400">
-                              Dark Mode {{ checked ? 'On' : 'Off' }}
-                            </span>
-                          </div>
+                          </ClientOnly>
                         </span>
                       </span>
                       <NuxtLink
@@ -214,29 +248,31 @@ const toggleMobileMenu = () => {
             role="menuitem"
           >
             <span class="flex flex-col">
-              <div class="">
-                <div
-                  class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
-                >
-                  <input
-                    v-model="checked"
-                    :checked="checked"
-                    @click="handleDarkMode"
-                    id="toggleDarkMode"
-                    type="checkbox"
-                    name="toggle"
-                    class="checked:bg-black outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
-                  />
-                  <label
-                    for="toggleDarkMode"
-                    class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+              <ClientOnly>
+                <div class="">
+                  <div
+                    class="relative inline-block w-10 mr-2 align-middle justify-center select-none"
                   >
-                  </label>
+                    <input
+                      v-model="checked"
+                      :checked="checked"
+                      @click="handleDarkMode"
+                      id="toggleDarkMode"
+                      type="checkbox"
+                      name="toggle"
+                      class="checked:bg-black outline-none focus:outline-none right-4 checked:right-0 duration-200 ease-in absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"
+                    />
+                    <label
+                      for="toggleDarkMode"
+                      class="block h-6 overflow-hidden bg-gray-300 rounded-full cursor-pointer"
+                    >
+                    </label>
+                  </div>
+                  <span class="font-medium text-gray-400">
+                    Dark Mode {{ checked ? 'On' : 'Off' }}
+                  </span>
                 </div>
-                <span class="font-medium text-gray-400">
-                  Dark Mode {{ checked ? 'On' : 'Off' }}
-                </span>
-              </div>
+              </ClientOnly>
             </span>
           </span>
           <NuxtLink
