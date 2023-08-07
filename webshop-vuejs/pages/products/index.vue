@@ -10,6 +10,17 @@ const {
   const { data } = await useFetch<any>('/api/products'); // TODO: response type
   return data.value;
 });
+
+useHead({
+  title: 'All Products',
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'All Products',
+    },
+  ],
+});
 </script>
 
 <template>

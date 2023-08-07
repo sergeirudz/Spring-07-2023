@@ -7,6 +7,17 @@ const { data } = useAsyncData('productId', async () => {
   const { data } = await useFetch<any>(`/api/products/${name}`); // TODO: response type
   return data.value;
 });
+
+useHead({
+  title: data.value.title,
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: data.value.description,
+    },
+  ],
+});
 </script>
 
 <template>

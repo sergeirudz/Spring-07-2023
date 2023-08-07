@@ -3,14 +3,12 @@ const title = ref('Webshop');
 const description = ref('Webshop');
 
 useHead({
-  title,
-  htmlAttrs: {
-    lang: 'en',
-  },
+  title: 'Home page',
   meta: [
     {
+      hid: 'description',
       name: 'description',
-      content: description,
+      content: 'Description Here',
     },
   ],
 });

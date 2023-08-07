@@ -3,7 +3,16 @@
     <div>Pay page</div>
   </NuxtLayout>
 </template>
-<script>
-export default {};
+<script setup lang="ts">
+useHead({
+  title: 'Payment page',
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'Description Here',
+    },
+  ],
+});
 </script>
 <style lang=""></style>

@@ -3,7 +3,16 @@
     <h1 class="text-xl">Profile Page</h1>
   </NuxtLayout>
 </template>
-<script>
-export default {};
+<script setup lang="ts">
+useHead({
+  title: 'Profile page',
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'Description Here',
+    },
+  ],
+});
 </script>
 <style lang=""></style>

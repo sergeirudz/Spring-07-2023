@@ -3,7 +3,16 @@
     <RegisterForm />
   </NuxtLayout>
 </template>
-<script>
-export default {};
+<script setup lang="ts">
+useHead({
+  title: 'Register',
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'Description Here',
+    },
+  ],
+});
 </script>
 <style lang=""></style>
