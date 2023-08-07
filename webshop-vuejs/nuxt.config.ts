@@ -16,6 +16,7 @@ export default defineNuxtConfig({
     layouts: fileURLToPath(new URL('./layouts', import.meta.url)),
     pages: fileURLToPath(new URL('./pages', import.meta.url)),
     types: fileURLToPath(new URL('./types', import.meta.url)),
+    utils: fileURLToPath(new URL('./utils', import.meta.url)),
   },
   // srcDir: 'src',
   css: ['~/assets/css/tailwind.css'],

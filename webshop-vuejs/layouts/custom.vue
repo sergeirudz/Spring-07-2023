@@ -11,7 +11,7 @@ const { isDarkMode } = useDarkMode();
   >
     <Nav />
     <main
-      class="container mx-auto flex flex-col bg-gray-500 flex-1 align-center"
+      class="container mx-auto flex flex-col bg-gray-500 flex-1 align-center justify-center"
     >
       <slot />
     </main>
