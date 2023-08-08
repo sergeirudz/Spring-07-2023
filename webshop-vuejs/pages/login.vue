@@ -1,24 +1,24 @@
 <template>
-    <NuxtLayout name="auth">
-        <LoginForm />
-    </NuxtLayout>
+  <NuxtLayout name="auth">
+    <LoginForm />
+  </NuxtLayout>
 </template>
 <script setup lang="ts">
-import { useUserStore } from "store/store.account";
+import { useUserStore } from 'store/store.account';
 
-definePageMeta({
-    middleware: ["guest-only"],
-});
+// definePageMeta({
+//     middleware: ["guest-only"],
+// });
 
 useHead({
-    title: "Login page",
-    meta: [
-        {
-            hid: "description",
-            name: "description",
-            content: "Description Here",
-        },
-    ],
+  title: 'Login page',
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: 'Description Here',
+    },
+  ],
 });
 </script>
 <style></style>
