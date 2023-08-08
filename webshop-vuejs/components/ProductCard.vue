@@ -15,7 +15,7 @@
                     :class="
                         (nrProductsAddedToCart <= 0 && 'hidden') || (nrProductsAddedToCart === undefined && 'hidden')
                     "
-                    class="text-xl flex gap-3 select-none"
+                    class="text-xl flex gap-3 select-none justify-center"
                 >
                     <span @click="handleRemoveFromCart(data)" class="cursor-pointer text-gray-50">-</span>
                     <span class="text-red-600">{{ nrProductsAddedToCart }}</span>
@@ -45,11 +45,16 @@ const props = defineProps<{
 
 const cartStore = useCartStore();
 const handleAddToCart = (product: Product) => {
-    cartStore.addToCart(product);
+    cartStore.addOneToCart(product);
 };
 const handleRemoveFromCart = (product: Product) => {
-    cartStore.removeFromCart(product);
+    cartStore.removeOneFromCart(product);
 };
+
+const handleDeleteFromCart = (product: Product) => {
+    cartStore.deleteProductFromCart(product);
+};
+
 const nrProductsAddedToCart = computed(() => {
     return cartStore.cartItems.find((item) => item.id === props.data.id)?.nrInCart;
 });

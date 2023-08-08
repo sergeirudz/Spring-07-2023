@@ -31,3 +31,8 @@
   - <https://tailwind-elements.com/docs/standard/integrations/vue-integration/>
   - <https://merakiui.com/components>
 - Pinia state management <https://pinia.vuejs.org/>
+
+## Examples
+
+- Storybook <https://github.dev/srcdev/nuxt3-pinia-i18n-storybook/tree/main/stores>
+- Middleware <https://github.dev/damien-hl/nuxt3-auth-example/tree/main/middleware>

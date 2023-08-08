@@ -10,7 +10,7 @@ export const useCartStore = defineStore("cartStore", {
         cartItems: [] as Product[],
     }),
     actions: {
-        addToCart(product: Product) {
+        addOneToCart(product: Product) {
             const index = this.cartItems.findIndex((item) => item.id === product.id);
             if (index !== -1) {
                 this.cartItems[index].nrInCart!++;
@@ -19,7 +19,7 @@ export const useCartStore = defineStore("cartStore", {
                 this.cartItems.push(product);
             }
         },
-        removeFromCart(product: Product) {
+        removeOneFromCart(product: Product) {
             const index = this.cartItems.findIndex((item) => item.id === product.id);
 
             if (this.cartItems[index].nrInCart! > 0) {
@@ -29,6 +29,10 @@ export const useCartStore = defineStore("cartStore", {
             if (this.cartItems[index].nrInCart === 0) {
                 this.cartItems.splice(index, 1);
             }
+        },
+        deleteProductFromCart(product: Product) {
+            const index = this.cartItems.findIndex((item) => item.id === product.id);
+            this.cartItems.splice(index, 1);
         },
     },
     persist: {
