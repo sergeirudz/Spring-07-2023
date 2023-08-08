@@ -25,7 +25,7 @@ public class ProductController {
     }
 
     @GetMapping("public-products")
-    public ResponseEntity<Page<ProductDTO>> getPublicProducts(
+    public ResponseEntity<Page<ProductDTO>> getPublicProducts( // TODO fix this to PAGE
             Pageable pageable
     ) {
         // localhost:8080/public-products?page=0&size=2&sort=id,desc„

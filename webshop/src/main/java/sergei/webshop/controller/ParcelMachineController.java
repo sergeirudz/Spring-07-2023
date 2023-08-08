@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import sergei.webshop.dto.ParcelMachines.OmnivaPM;
 import sergei.webshop.dto.ParcelMachines.ParcelMachines;
+import sergei.webshop.dto.ParcelMachines.SmartPostPM;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,14 +44,14 @@ public class ParcelMachineController {
 
         parcelMachines.setOmnivaPMs(omnivaResult);
 
-//        ResponseEntity<SmartPostPM[]> smartPostResponse = restTemplate.exchange("https://www.smartpost.ee/places.json",
-//                HttpMethod.GET, null, SmartPostPM[].class);
+        ResponseEntity<SmartPostPM[]> smartPostResponse = restTemplate.exchange("https://www.smartpost.ee/places.json",
+                HttpMethod.GET, null, SmartPostPM[].class);
 
-//        if (finalCountry.equals("EE")) {
-//            parcelMachines.setSmartPostPMs(Arrays.asList(smartPostResponse.getBody()));
-//        } else {
+        if (finalCountry.equals("EE")) {
+            parcelMachines.setSmartPostPMs(Arrays.asList(smartPostResponse.getBody()));
+        } else {
             parcelMachines.setSmartPostPMs(new ArrayList<>());
-//        }
+        }
 
         return parcelMachines;
     }

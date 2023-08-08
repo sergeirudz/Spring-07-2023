@@ -25,7 +25,7 @@ public class OrderController {
         return orderService.deleteOrder(id);
     }
 
-    @GetMapping("orders/{id}")
+    @PostMapping("orders/{id}")
     public ResponseEntity<OrderDTO> getOrder(@PathVariable Long id) {
         return orderService.getOrder(id);
     }
