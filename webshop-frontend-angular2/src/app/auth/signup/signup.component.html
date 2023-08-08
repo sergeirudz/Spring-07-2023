@@ -9,17 +9,16 @@
 
                 <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-                <form class="mx-1 mx-md-4">
-
+                <form class="mx-1 mx-md-4" (ngSubmit)="handleSubmit(signUpForm)" #signUpForm="ngForm">
                   <!-- FIRST NAME & LAST NAME -->
                   <div class="d-flex flex-row align-items-center mb-4 gap-3">
                     <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="text" id="firstName" class="form-control" />
+                      <input type="text" id="firstName" class="form-control active" ngModel name="firstName" />
                       <label class="form-label" for="firstName">First name</label>
                     </div>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="text" id="lastName" class="form-control" />
+                      <input type="text" id="lastName" class="form-control active" ngModel name="lastName" />
                       <label class="form-label" for="lastName">Last name</label>
                     </div>
                   </div>
@@ -28,12 +27,12 @@
                   <div class="d-flex flex-row align-items-center mb-4 gap-3">
                     <i class="fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="number" id="firstName" class="form-control" />
-                      <label class="form-label" for="firstName">Personal code</label>
+                      <input type="number" id="personalCode" class="form-control active" ngModel name="personalCode" />
+                      <label class="form-label" for="personalCode">Personal code</label>
                     </div>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="tel" id="lastName" class="form-control" />
-                      <label class="form-label" for="lastName">Phone</label>
+                      <input type="tel" id="phone" class="form-control active" ngModel name="phone" />
+                      <label class="form-label" for="phone">Phone</label>
                     </div>
                   </div>
 
@@ -41,8 +40,8 @@
                   <div class="d-flex flex-row align-items-center mb-4 gap-3">
                     <i class="fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="text" id="firstName" class="form-control" />
-                      <label class="form-label" for="firstName">Address</label>
+                      <input type="text" id="address" class="form-control active" ngModel name="address" />
+                      <label class="form-label" for="address">Address</label>
                     </div>
                   </div>
 
@@ -50,7 +49,7 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="email" id="email" class="form-control" />
+                      <input type="email" id="email" class="form-control active" ngModel name="email" />
                       <label class="form-label" for="email">Your Email</label>
                     </div>
                   </div>
@@ -59,7 +58,7 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="password" id="password" class="form-control" />
+                      <input type="password" id="password" class="form-control active" ngModel name="password" />
                       <label class="form-label" for="password">Password</label>
                     </div>
                   </div>
@@ -68,14 +67,15 @@
                   <div class="d-flex flex-row align-items-center mb-4">
                     <i class="fas fa-key fa-lg me-3 fa-fw"></i>
                     <div class="form-outline flex-fill mb-0 bg-light">
-                      <input type="password" id="passwordConfirm" class="form-control" />
+                      <input type="password" id="passwordConfirm" class="form-control active" ngModel
+                             name="passwordConfirm" />
                       <label class="form-label" for="passwordConfirm">Repeat your password</label>
                     </div>
                   </div>
 
 
                   <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                    <button type="button" class="btn btn-primary btn-lg">Register</button>
+                    <button type="submit" class="btn btn-primary btn-lg">Register</button>
                   </div>
 
                 </form>
