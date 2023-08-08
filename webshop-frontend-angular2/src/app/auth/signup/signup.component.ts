@@ -17,13 +17,13 @@ export class SignupComponent {
     // validate if passwords match
 
     const signUpFormData: SignUpForm = {
-      personalCode: formValue.personalCode, //
-      firstName: formValue.firstName, //
-      lastName: formValue.lastName, //
-      password: formValue.password, //
+      personalCode: formValue.personalCode,
+      firstName: formValue.firstName,
+      lastName: formValue.lastName,
+      password: formValue.password,
       contactData: {
-        email: formValue.email, //
-        phone: formValue.phone, //
+        email: formValue.email,
+        phone: formValue.phone,
         address: {
           country: formValue.country,
           county: formValue.county,
@@ -35,6 +35,26 @@ export class SignupComponent {
     };
 
     this.authService.signUp(signUpFormData).subscribe();
+  }
+  fillWithDummyData(signUpForm: NgForm) {
+    signUpForm.setValue({
+      email: '1@1.com',
+      password: '1',
+      passwordConfirm: '1',
+      firstName: 'John',
+      lastName: 'Doe',
+      personalCode: '1',
+      phone: '+3725554321',
+      country: 'Estonia',
+      county: 'Harju',
+      street: 'Lennujaama tee',
+      number: '1',
+      postalIndex: '12345',
+    });
+  }
+
+  clearForm(signUpForm: NgForm) {
+    signUpForm.reset();
   }
 }
 
