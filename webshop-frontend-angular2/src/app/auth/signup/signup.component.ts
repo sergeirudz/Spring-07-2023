@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { SignUpForm } from 'src/app/models/signup-form.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-signup',
@@ -8,6 +9,8 @@ import { SignUpForm } from 'src/app/models/signup-form.interface';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
+  constructor(private authService: AuthService) {}
+
   handleSubmit(signUpForm: NgForm) {
     const formValue = signUpForm.value;
 
@@ -22,6 +25,6 @@ export class SignupComponent {
       confirmPassword: formValue.confirmPassword,
     };
 
-    console.log(signUpFormData);
+    this.authService.signUp(signUpFormData).subscribe();
   }
 }
