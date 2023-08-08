@@ -1,6 +1,7 @@
+import { LoginForm } from 'src/app/models/login-form.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginForm } from '../models/login-form.interface';
+
 import { environment } from 'src/environment/environment';
 import { SignUpForm } from '../models/signup-form.interface';
 

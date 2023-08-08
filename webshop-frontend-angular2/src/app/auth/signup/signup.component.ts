@@ -14,17 +14,44 @@ export class SignupComponent {
   handleSubmit(signUpForm: NgForm) {
     const formValue = signUpForm.value;
 
+    // validate if passwords match
+
     const signUpFormData: SignUpForm = {
-      firstName: formValue.firstName,
-      lastName: formValue.lastName,
-      personalCode: formValue.personalCode,
-      phone: formValue.phone,
-      email: formValue.email,
-      address: formValue.address,
-      password: formValue.password,
-      confirmPassword: formValue.confirmPassword,
+      personalCode: formValue.personalCode, //
+      firstName: formValue.firstName, //
+      lastName: formValue.lastName, //
+      password: formValue.password, //
+      contactData: {
+        email: formValue.email, //
+        phone: formValue.phone, //
+        address: {
+          country: formValue.country,
+          county: formValue.county,
+          street: formValue.street,
+          number: formValue.number,
+          postalIndex: formValue.postalIndex,
+        },
+      },
     };
 
     this.authService.signUp(signUpFormData).subscribe();
   }
 }
+
+/* {
+  "personalCode": "1",
+  "firstName": "John",
+  "lastName": "Doe",
+  "password": "password",
+  "contactData": {
+      "email": "john.doe12@example.com",
+      "phone": "+372555555",
+      "address": {
+          "country": "Estonia",
+          "county": "Harju",
+          "street": "123 Main Street",
+          "number": "12",
+          "postalIndex": "12345"
+      }
+  }
+} */
