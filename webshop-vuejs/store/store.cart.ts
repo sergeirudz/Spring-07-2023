@@ -25,6 +25,10 @@ export const useCartStore = defineStore("cartStore", {
             if (this.cartItems[index].nrInCart! > 0) {
                 this.cartItems[index].nrInCart!--;
             }
+
+            if (this.cartItems[index].nrInCart === 0) {
+                this.cartItems.splice(index, 1);
+            }
         },
     },
     persist: {
