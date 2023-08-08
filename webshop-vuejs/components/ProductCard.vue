@@ -11,7 +11,12 @@
                         {{ data.category.toUpperCase() }}
                     </h4>
                 </span>
-                <span :class="nrProductsAddedToCart <= 0 && 'hidden'" class="text-xl flex gap-3 select-none">
+                <span
+                    :class="
+                        (nrProductsAddedToCart <= 0 && 'hidden') || (nrProductsAddedToCart === undefined && 'hidden')
+                    "
+                    class="text-xl flex gap-3 select-none"
+                >
                     <span @click="handleRemoveFromCart(data)" class="cursor-pointer text-gray-50">-</span>
                     <span class="text-red-600">{{ nrProductsAddedToCart }}</span>
                     <span @click="handleAddToCart(data)" class="cursor-pointer text-gray-50">+</span>
@@ -46,7 +51,7 @@ const handleRemoveFromCart = (product: Product) => {
     cartStore.removeFromCart(product);
 };
 const nrProductsAddedToCart = computed(() => {
-    return cartStore.cartItems.filter((item) => item.id === props.data.id).length;
+    return cartStore.cartItems.find((item) => item.id === props.data.id)?.nrInCart;
 });
 
 const isStoreInitialized = ref(false);
