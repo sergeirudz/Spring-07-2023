@@ -3,6 +3,7 @@ package sergei.webshop.service;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import sergei.webshop.dto.PersonDTO;
 import sergei.webshop.entity.PersonAddress;
 import sergei.webshop.entity.PersonContactData;
 import sergei.webshop.entity.Person;
+import sergei.webshop.jwt.JWTUtil;
 import sergei.webshop.repository.AddressRepository;
 import sergei.webshop.repository.ContactDataRepository;
 import sergei.webshop.repository.PersonRepository;
@@ -30,6 +32,12 @@ public class PersonServiceImpl implements PersonService {
 
     @Autowired
     ModelMapper modelMapper;
+
+    public PersonServiceImpl(JWTUtil jwtUtil) {
+        this.jwtUtil = jwtUtil;
+    }
+
+    private final JWTUtil jwtUtil;
 
     @Override
     public ResponseEntity<List<Person>> findAll() {
@@ -74,6 +82,11 @@ public class PersonServiceImpl implements PersonService {
         person.setPassword(personDTO.getPassword());
         person.setPersonContactData(personContactData);
         personRepository.save(person);
+
+        // Create JWT based on personalCode
+        String jwtToken = jwtUtil.issueToken(personDTO.getPersonalCode(), "ROLE_USER");
+
+        ResponseEntity.ok().header(HttpHeaders.AUTHORIZATION, jwtToken).build();
 
         PersonDTO createdPersonDTO = modelMapper.map(person, PersonDTO.class);
         return new ResponseEntity<>(createdPersonDTO, HttpStatus.CREATED);
