@@ -7,7 +7,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import sergei.webshop.config.JwtService;
 import sergei.webshop.dto.AuthenticationResponse;
 import sergei.webshop.dto.LoginDTO;
 import sergei.webshop.dto.PersonDTO;
@@ -90,12 +89,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public ResponseEntity<AuthenticationResponse> login(LoginDTO loginDTO) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        loginDTO.getPersonalCode(),
+                        loginDTO.getEmail(),
                         loginDTO.getPassword()
                 )
         );
-        var person = personRepository.findByPersonalCode(loginDTO.getPersonalCode());
+        Person person = personRepository.findByPersonContactDataEmail(loginDTO.getEmail());
                 // TODO throw exception if the person does not exist.
+        System.out.println("person: " + person);
 
         var jwt = jwtService.generateToken(person);
         return ResponseEntity.ok(AuthenticationResponse

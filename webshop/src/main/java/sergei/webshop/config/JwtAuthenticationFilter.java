@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import sergei.webshop.service.JwtService;
 
 import java.io.IOException;
 
@@ -40,7 +41,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // Extract token from the header
-        //        jwt = authorizationHeader.substring(7); // get everything after "Bearer "
         String[] headerParts = authorizationHeader.split(" ");
         if (headerParts.length != 2 || !headerParts[0].equalsIgnoreCase("Bearer")) {
             filterChain.doFilter(request, response);

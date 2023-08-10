@@ -51,7 +51,7 @@ public class Person implements UserDetails {
 
     @Override
     public String getUsername() {
-        return personalCode;
+        return personContactData.getEmail();
     }
 
     @Override

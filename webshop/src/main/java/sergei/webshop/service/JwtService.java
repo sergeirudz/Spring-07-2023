@@ -1,4 +1,4 @@
-package sergei.webshop.config;
+package sergei.webshop.service;
 
 import org.springframework.security.core.userdetails.UserDetails;
 

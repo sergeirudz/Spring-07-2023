@@ -34,7 +34,7 @@ public class AppConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> personRepository.findByPersonalCode(username);
+        return username -> personRepository.findByPersonContactDataEmail(username);
         // TODO throw exception if user not found
 
 //                .orElseThrow(() -> new UsernameNotFoundException(username));

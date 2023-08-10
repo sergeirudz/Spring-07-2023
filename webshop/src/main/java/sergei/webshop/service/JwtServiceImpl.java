@@ -1,4 +1,4 @@
-package sergei.webshop.config;
+package sergei.webshop.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -26,6 +26,10 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String extractUserPersonalCode(String jwt) {
+        return extractClaim(jwt, Claims::getSubject);
+    }
+
+    public String extractUserEmail(String jwt) {
         return extractClaim(jwt, Claims::getSubject);
     }
 
@@ -61,7 +65,7 @@ public class JwtServiceImpl implements JwtService {
     // Validate token
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUserPersonalCode(token);
+        final String username = extractUserEmail(token);
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
