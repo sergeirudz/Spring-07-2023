@@ -1,40 +1,21 @@
-import { getErrorResponse } from '../../../utils/fetchUtils';
-import { sendJSON } from '../../helpers';
+import { getErrorResponse } from "../../../utils/fetchUtils";
+import { sendJSON } from "../../helpers";
+import { Login } from "../../models/login";
 
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig();
-  const req = event.node.req;
-  const res = event.node.res;
-  const body = await readBody(event);
+    const config = useRuntimeConfig();
+    const req = event.node.req;
+    const res = event.node.res;
+    const body: Login = await readBody(event);
 
-  return {
-    email: '1@1.com',
-    accessToken: '111',
-    refreshToken: '222',
-  };
-
-  try {
-    const payload = new Promise((resolve, reject) => {
-      resolve({
-        email: '1@1.com',
-        accessToken: '111',
-        refreshToken: '222',
-      });
-
-      sendJSON(payload, res);
-    });
-
-    // const payload = await unWrap(
-    //     await fetch(`${config.BACKEND_URL}/api/auth/register`, {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         method: 'POST',
-    //         body: JSON.stringify(req.body),
-    //     })
-    // );
-    // sendJSON(payload.json, res);
-  } catch (error: any) {
-    return getErrorResponse(error);
-  }
+    try {
+        const response = await $fetch(`${config.BACKEND_URL}/auth/login`, {
+            method: "POST",
+            body,
+        });
+        console.log(res);
+        return response;
+    } catch (error: any) {
+        return getErrorResponse(error);
+    }
 });

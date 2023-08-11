@@ -25,7 +25,7 @@
                             </svg>
                         </span>
                         <input
-                            v-model="email"
+                            v-model="form.data.email"
                             type="text"
                             id="email"
                             class="rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -51,7 +51,7 @@
                             </svg>
                         </span>
                         <input
-                            v-model="password"
+                            v-model="form.data.password"
                             type="password"
                             id="password"
                             class="rounded-r-lg flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
@@ -91,29 +91,37 @@
     </div>
 </template>
 <script setup lang="ts">
-import { useUserStore } from "store/store.account";
+import { Login } from "server/models/login";
+import { useUserStore } from "store/store.user";
 
 const userStore = useUserStore();
 
-const email = ref(""); // Add this line
-const password = ref(""); // Add this line
+interface From {
+    data: Login;
+    error: string;
+    pending: boolean;
+}
 
-const payload = reactive({
-    email: "",
-    password: "",
+const form: From = reactive({
+    data: {
+        email: "1@1.com",
+        password: "1",
+        rememberMe: false,
+    },
+    error: "",
+    pending: false,
 });
 
 const handleLogin = async () => {
-  try {
-    const response = await userStore.loginUser({
-      email: email.value,
-      password: password.value,
-    });
-
-    // Handle the response from loginUser if needed
-  } catch (error) {
-    // Handle the error if needed
-  }
+    try {
+        await userStore.login({
+            email: form.data.email,
+            password: form.data.password,
+        });
+        // await navigateTo("/");
+    } catch (error) {
+        console.log(error);
+    }
 };
 </script>
 <style lang=""></style>

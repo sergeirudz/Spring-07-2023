@@ -23,6 +23,7 @@ export default defineNuxtConfig({
         types: fileURLToPath(new URL("./types", import.meta.url)),
         utils: fileURLToPath(new URL("./utils", import.meta.url)),
         store: fileURLToPath(new URL("./store", import.meta.url)),
+        server: fileURLToPath(new URL("./server", import.meta.url)),
     },
     // srcDir: 'src',
     css: ["~/assets/css/tailwind.css"],

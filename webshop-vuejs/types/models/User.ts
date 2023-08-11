@@ -5,5 +5,5 @@ export interface User {
     isAdmin: boolean;
     isLoggedIn: boolean;
     accessToken: string;
-    refreshToken: string;
+    refreshToken?: string;
 }

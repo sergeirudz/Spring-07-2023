@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { User } from "types/models/User";
+import { Register } from "server/models/register";
 
 const initialState: User = {
     email: "",
@@ -30,7 +31,7 @@ export const useUserStore = defineStore("userStore", {
             this.accessToken = "";
             this.refreshToken = "";
         },
-        async registerUser(this: User, payload: Pick<User, "email" | "password">) {
+        async register(this: User, payload: Register) {
             const response = await fetch("/api/auth/register", {
                 method: "POST",
                 headers: {
@@ -39,10 +40,12 @@ export const useUserStore = defineStore("userStore", {
                 body: JSON.stringify(payload),
             });
             const data = await response.json();
-            return data;
+            this.accessToken = data.token;
+            this.isLoggedIn = true;
+            await navigateTo("/");
         },
 
-        async loginUser(this: User, payload: Pick<User, "email" | "password">) {
+        async login(this: User, payload: Pick<User, "email" | "password">) {
             const response = await fetch("/api/auth/login", {
                 method: "POST",
                 headers: {
@@ -51,7 +54,12 @@ export const useUserStore = defineStore("userStore", {
                 body: JSON.stringify(payload),
             });
             const data = await response.json();
-            return data;
+            this.accessToken = data.token;
+            this.isLoggedIn = true;
+            await navigateTo("/");
         },
+    },
+    persist: {
+        key: "userStore",
     },
 });
