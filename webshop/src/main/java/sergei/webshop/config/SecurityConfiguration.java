@@ -20,23 +20,55 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+/*
+TODO refactor https://youtu.be/TeBt0Ike_Tk?t=1687
+https://github.com/unknownkoder/spring-security-login-system/blob/main/AuthenticatedBackend/src/main/java/com/unkownkoder/configuration/SecurityConfiguration.java
+ */
         http
-            .csrf() // TODO refactor
-            .disable()
-                .authorizeHttpRequests()
-                .requestMatchers("/auth/**" )
-                .permitAll()
-                .anyRequest()
-                .authenticated()
-                .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-        
+                .cors(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers
+                        .xssProtection(HeadersConfigurer.XXssConfig::disable
+                        ))
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(requests -> {
+                    requests
+                            .requestMatchers("/public-products").permitAll()
+                            .requestMatchers("/categories").permitAll()
+                            .requestMatchers("/login").permitAll()
+                            .requestMatchers("/signup").permitAll()
+                            .anyRequest().authenticated();
+                });
+
+        http.sessionManagement(
+                session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        );
+
+//        http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class); // PREVIOUS VERSION
+        http.addFilterBefore(tokenParser, BasicAuthenticationFilter.class);
 
         return http.build();
+
+//        http
+//            .cors()
+//            .and()
+//            .headers()
+//            .xssProtection()
+//            .disable()
+//            .and()
+//            .csrf() // TODO refactor
+//            .disable()
+//                .authorizeHttpRequests()
+//                .requestMatchers("/auth/**" )
+//                .permitAll()
+//                .anyRequest()
+//                .authenticated()
+//                .and()
+//                .sessionManagement()
+//                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                .and()
+//                .authenticationProvider(authenticationProvider)
+//                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+//
     }
 
 }
