@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import sergei.webshop.cache.ProductCache;
@@ -60,6 +61,8 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public ResponseEntity<String> createPayOrder(OrderDTO orderDTO) throws Exception {
+
+        String personId = SecurityContextHolder.getContext().getAuthentication().getPrincipal().toString();
         double totalSum = calculateTotalSum(orderDTO.getOrderRows());
 
         Order order = new Order();

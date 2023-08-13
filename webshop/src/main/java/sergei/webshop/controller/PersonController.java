@@ -20,10 +20,10 @@ public class PersonController {
         return personService.findAll();
     }
 
-    @PostMapping("persons")
+/*    @PostMapping("persons")
     public ResponseEntity<PersonDTO> addPerson(
             @RequestBody PersonDTO personDTO) {
-        /*
+        *//*
         {
     "personalCode": "1",
     "firstName": "John",
@@ -41,9 +41,9 @@ public class PersonController {
         }
     }
 }
-        * */
+        * *//*
         return personService.addOne(personDTO);
-    }
+    }*/
 
     @DeleteMapping("person/{id}")
     public ResponseEntity<PersonDTO> deletePerson(
